@@ -1,0 +1,3 @@
+-- require('gitsigns').setup()
+-- -- disable at startup
+-- vim.cmd("Gitsigns toggle_signs")
