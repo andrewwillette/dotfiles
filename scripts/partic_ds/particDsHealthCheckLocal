@@ -1,0 +1,2 @@
+#!/bin/sh
+curl --location --request GET 'http://localhost:8080/admin/health'

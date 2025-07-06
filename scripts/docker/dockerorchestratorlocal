@@ -1,0 +1,2 @@
+#!/bin/sh
+sbt docker:publishLocal && docker-compose up --build

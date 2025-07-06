@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Show site docuemntation for jwk measurements 
+open http://repo.snapshot.cerner.corp/nexus/content/sites/cloud-snapshot-site/main/com.cerner.cloud.idm.system/system-accounts/5.6-SNAPSHOT/measurement-event-report.html
+# Show measurements existing in new relic
+open https://one.newrelic.com/
+# Query for LoadJwkSetUrl events 
+# SELECT * FROM CloudMeasurement where appName like 'SystemAccounts-DEV' and measurementName = 'LoadJwkSetUrl' since 3 weeks ago
+
+# show deployed system accounts service configuration including the oauth key/secret from created system account
+open https://associates.devcernercentral.com/system-accounts/all/114c0a2f-2327-4eb0-993c-3c35b4acc8e1
+
+ssh -t svccloudengineering@cerncloudeng58.northamerica.cerner.net 'sudo vim /opt/tomcat/instances/cloud_system_accounts_credentials1/conf/Catalina/localhost/system-accounts-credentials.xml'

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# start tomcat server for system account
+# might have to use tmux here and make console windows and all that

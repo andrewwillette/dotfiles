@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd ~/git/system-accounts-reactor
+mvn test -e -Dmaven.javadoc.skip=true -Ddependency-check.skip=true -Dlicenses.skip=true -DfailIfNoTests=false -Dtest=$1 -pl com.cerner.cloud.idm.system:system-accounts
+

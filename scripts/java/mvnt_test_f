@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# printf "hello testing fail"
+
+currentDir=$(pwd)
+source "${BASH_SOURCE%/*}/mvn_utils.sh"
+pomParent=$(get_pom_dir)
+cd $pomParent
+mvnt test -Dtest=AccountJwkSetControllerTest#testDeleteJWKSet
+cd $currentDir
+# while read line
+# do
+    # testLine="$line"
+# done < "${1:-/dev/stdin}"
+
+# echo "testLine is $testLine"

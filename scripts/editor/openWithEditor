@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+var_path=$PWD
+cd ~/git
+toOpen=$(ls -la|awk '{print $9;}'|fzf)
+if [ -n "$toOpen" ]
+then
+    $1 $toOpen
+fi
+cd $var_path

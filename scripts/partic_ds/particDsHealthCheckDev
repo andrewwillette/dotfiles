@@ -1,0 +1,2 @@
+#!/bin/sh
+curl --location --request GET 'https://participants-datastore-dev.clouddqt.capitalone.com/admin/health'

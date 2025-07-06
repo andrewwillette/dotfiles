@@ -1,0 +1,2 @@
+#!/bin/sh
+sysctl net.inet.ip.portrange.first net.inet.ip.portrange.last

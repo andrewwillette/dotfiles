@@ -1,0 +1,6 @@
+#!/bin/sh
+
+export VAULT_ADDR=https://chamber-qa-us-east-1.clouddqt.capitalone.com
+vault login -method=ldap -path=aws-ldap username=rjm995
+vault read bb30f8a2-2874-481c-9824-2e448899ab46/cassandra/cassandra_root_password
+# echo <secret> | base64 -D

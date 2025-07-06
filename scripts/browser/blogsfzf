@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+typeset -A blogUrls
+blogUrls["the money illusion"]='https://www.themoneyillusion.com/'
+blogUrls["george hotz"]='https://geohot.github.io/blog/'
+
+ARRAY=()
+for key val in "${(@kv)blogUrls}"; do
+  ARRAY+=($key)
+done
+printf "%s\n" "${ARRAY[@]}"|fzf-tmux --ansi --multi --layout=reverse --exact --no-sort| while read line ; do
+  open $blogUrls[$line]
+done

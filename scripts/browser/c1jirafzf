@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+typeset -A jiraUrls
+
+jiraUrls["breguet jira board"]='https://jira.kdc.capitalone.com/secure/RapidBoard.jspa?rapidView=65453'
+jiraUrls["breguet common ADL epic"]='https://jira.kdc.capitalone.com/browse/CPALIN-2383'
+jiraUrls["breguet RTE epic"]='https://jira.kdc.capitalone.com/browse/CPALIN-2927'
+
+jiraUrls["omega jira board"]='https://jira.kdc.capitalone.com/secure/RapidBoard.jspa?rapidView=66679&projectKey=CPALIN'
+jiraUrls["omega tech improvements"]='https://jira.kdc.capitalone.com/browse/CPALIN-2660'
+
+jiraUrls["jaguar jira board"]='https://jira.kdc.capitalone.com/secure/RapidBoard.jspa?rapidView=65685'
+jiraUrls["jaguar tech improvements"]='https://jira.kdc.capitalone.com/browse/COREDATA-2129'
+
+ARRAY=()
+for key val in "${(@kv)jiraUrls}"; do
+    ARRAY+=($key)
+done
+
+printf "%s\n" "${ARRAY[@]}"|fzf-tmux --ansi --multi --layout=reverse --exact --no-sort| while read line ; do
+    open $jiraUrls[$line]
+done

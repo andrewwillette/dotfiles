@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+typeset -A githubUrls
+githubUrls["participants-datastore"]='https://github.cloud.capitalone.com/prometheus/participants-datastore'
+githubUrls["participants-datastore-7ps"]='https://github.cloud.capitalone.com/prometheus/participants-datastore-7ps'
+githubUrls["collaterals-datastore"]='https://github.cloud.capitalone.com/prometheus/collaterals-datastore'
+githubUrls["collaterals-datastore-7ps"]='https://github.cloud.capitalone.com/prometheus/collaterals-datastore-7ps'
+githubUrls["account-attributes-datastore-7ps"]='https://github.cloud.capitalone.com/prometheus/account-attributes-datastore-7ps'
+githubUrls["account-attributes-datastore"]='https://github.cloud.capitalone.com/prometheus/account-attributes-datastore'
+githubUrls["pfc-common-go"]='https://github.cloud.capitalone.com/prometheus/pfc-common-go'
+githubUrls["pfc-coaf-orchestrator"]='https://github.cloud.capitalone.com/prometheus/pfc-coaf-orchestrator'
+githubUrls["pfc-ledger"]='https://github.cloud.capitalone.com/prometheus/pfc-ledger'
+githubUrls["DevExchange API-Interface-Specifications"]='https://github.cloud.capitalone.com/API-Interface-Specifications?q=&type=&language=&sort='
+ARRAY=()
+for key val in "${(@kv)githubUrls}"; do
+  ARRAY+=($key)
+done
+printf "%s\n" "${ARRAY[@]}"|fzf --multi --layout=reverse --exact | while read line ; do
+    open $githubUrls[$line]
+done

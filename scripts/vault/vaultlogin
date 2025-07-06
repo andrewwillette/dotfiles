@@ -1,0 +1,2 @@
+#!/bin/sh
+vault login -address=https://chamber-qa.clouddqt.capitalone.com -method=ldap -path=aws-ldap username=rjm995

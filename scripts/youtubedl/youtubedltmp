@@ -1,0 +1,5 @@
+#/usr/local/bin/bash
+var_path=$PWD;
+cd ~/tmp;
+youtube-dl -x --audio-format wav $1;
+cd $var_path

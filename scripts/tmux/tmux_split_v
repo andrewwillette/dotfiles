@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+if [ ! "$TMUX" ]; then
+    tmux attach -t main || tmux new -s main
+fi
+tmux split-window -v

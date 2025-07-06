@@ -1,0 +1,69 @@
+#!/usr/bin/env zsh
+typeset -A jenkinsUrls
+
+jenkinsUrls["card-nuc-1 domain"]='https://card-nuc-n1jenkins.cloud.capitalone.com/'
+jenkinsUrls["card-nuc-1 cash"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/'
+jenkinsUrls["cash-posted-transactions-event-handler"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-posted-transactions-event-handler/'
+jenkinsUrls["cash-stateful-functions-platform"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-stateful-functions-platform/'
+jenkinsUrls["cash-library-event-handler"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-library-event-handler/'
+jenkinsUrls["cash-library-schema"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-library-schema/'
+jenkinsUrls["cash-posted-transactions-event-handler"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-posted-transactions-event-handler/'
+jenkinsUrls["cash-transactions-event-handler"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-transactions-event-handler/'
+jenkinsUrls["cash-library-dbutils"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-library-dbutils/'
+jenkinsUrls["cash-gemini-data-infrastructure"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-gemini-data-infrastructure/'
+jenkinsUrls["cash-gemini-event-handler"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-gemini-event-handler/'
+jenkinsUrls["cash-accounts-event-handler"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/cash/job/cash-accounts-event-handler/'
+
+jenkinsUrls["card-nuc-1 Core Streaming"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/'
+jenkinsUrls["cash-drl-generator"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/cash-drl-generator/'
+jenkinsUrls["adl-customer-account-iam-infra"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/adl-customer-account-iam-infra/'
+jenkinsUrls["adl-customer-account-tsys-legacy-model"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/adl-customer-account-tsys-legacy-model/'
+jenkinsUrls["adl-customer-account-configs"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/adl-customer-account-configs/'
+jenkinsUrls["adl-customer-account-batch-inserter"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/adl-customer-account-batch-inserter/'
+jenkinsUrls["adl-customer-account-batch-transformer"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/adl-customer-account-batch-transformer/'
+jenkinsUrls["adl-customer-account-data-loader-infra"]='https://card-nuc-n1jenkins.cloud.capitalone.com/job/Bogie/job/Core-Streaming/job/adl-customer-account-data-loader-infra/'
+
+jenkinsUrls["commercialcreditsolutions domain"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/'
+jenkinsUrls["commercialcreditsolutions cml-credit-approvals"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/job/Bogie/job/cml-credit-approvals/'
+jenkinsUrls["approval-composite-api"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/job/Bogie/job/cml-credit-approvals/job/approval-composite-api/'
+
+jenkinsUrls["commercialcreditsolutions comet"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/job/Bogie/job/comet/'
+jenkinsUrls["comet-ui"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/job/Bogie/job/comet/job/comet-ui/'
+
+jenkinsUrls["commercialcreditsolutions cml-approval-routing"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/job/Bogie/job/cml-approval-routing/'
+jenkinsUrls["approval-routing-domain-service"]='https://commercialcreditsolutionsjenkins.cloud.capitalone.com/job/Bogie/job/cml-approval-routing/job/approval-routing-domain-service/'
+
+ARRAY=()
+for key val in "${(@kv)jenkinsUrls}"; do
+  ARRAY+=($key)
+done
+printf "%s\n" "${ARRAY[@]}"|fzf-tmux --ansi --multi --layout=reverse --exact --no-sort| while read line ; do
+  open $jenkinsUrls[$line]
+done
+
+## Prometheus-Financial-Core URLs
+# jenkinsUrls["participants-datastore"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/participants-datastore/'
+# jenkinsUrls["participants-datastore-traffic-routing"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/participants-traffic-routing/'
+# jenkinsUrls["collaterals-datastore"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/collaterals-datastore/'
+# jenkinsUrls["collaterals-datastore-traffic-routing"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/collaterals-traffic-routing/'
+# jenkinsUrls["account-attributes-datastore"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/account-attributes-datastore/'
+# jenkinsUrls["account-attributes-datastore-traffic-routing"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/account-attributes-traffic-routing/'
+# jenkinsUrls["pfc-common-go"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-common-go/'
+# jenkinsUrls["pfc-coaf-orchestrator"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-coaf-orchestrator/'
+# jenkinsUrls["pfc-coaf-dealer-query-orchestrator"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-coaf-dealer-query-orch/'
+# jenkinsUrls["pfc-coaf-loan-query-orchestrator"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-coaf-loan-query-orch/'
+# jenkinsUrls["account-maintenance-hub"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/account-maintenance-hub/'
+# jenkinsUrls["account-maintenance-hub-mapper"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/account-maintenance-hub-mapper/'
+# jenkinsUrls["account-maintenance-hub-mapper-avro"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/account-maintenance-hub-mapper-avro/'
+# jenkinsUrls["pfc-ledger"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-ledger/'
+# jenkinsUrls["pfc-transaction-hub"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-transaction-hub/'
+# jenkinsUrls["pfc-dealer-transaction-hub"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-dealer-transaction-hub/'
+# jenkinsUrls["pfc-shawexit-testdrive"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-shawexit-testdrive'
+# jenkinsUrls["event-generator"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/event-generator/'
+# jenkinsUrls["pfc-instrument-controller"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-instrument-controller/'
+# jenkinsUrls["pfc-instrument-transition-deploy"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-instrument-transition-deploy/'
+# jenkinsUrls["pfc-commons"]='https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-commons/'
+# jenkinsUrls["herschel"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/herschel/'
+# jenkinsUrls["pfc-datastores-infra"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-datastores-infra/'
+# jenkinsUrls["retry-lambda-toggle"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-retry-lambda-toggle/'
+# jenkinsUrls["retry-lambda"]='https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-retry-lambda/'

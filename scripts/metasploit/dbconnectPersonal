@@ -1,0 +1,2 @@
+#!/bin/sh
+db_connect andrewwillette@localhost:5432

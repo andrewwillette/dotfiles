@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#tmux split-window -h 'bash nvim ~/git/metronome ; read'
+tmux split-window -c ~/git/metronome -v less +F metronome.log
+tmux split-window -c ~/git/metronome -h
+nvim ~/git/metronome/main.go

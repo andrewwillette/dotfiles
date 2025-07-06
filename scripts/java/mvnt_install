@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+currentDir=$(pwd)
+source "${BASH_SOURCE%/*}/mvn_utils.sh"
+pomParent=$(get_pom_dir)
+cd $pomParent
+mvnt install
+cd $currentDir

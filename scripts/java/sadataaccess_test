@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mvn test -Dmaven.javadoc.skip=true -Ddependency-check.skip=true -Dlicenses.skip=true -DfailIfNoTests=false -pl system-accounts-parent/system-accounts-dataaccess -Dtest=$1

@@ -1,0 +1,2 @@
+#!/bin/sh
+make test TEST_ENV=devex-uat-coafshawexit DEBUG=true SUITE=coafcanaryshawexit

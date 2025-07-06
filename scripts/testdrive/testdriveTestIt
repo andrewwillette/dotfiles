@@ -1,0 +1,3 @@
+#!/bin/sh
+make test TEST_ENV=devex-it-coafshawexit DEBUG=true SUITE=coafcanaryshawexit
+# make test TEST_ENV=devex-it-coafshawexit DEBUG=true SUITE=coafcanaryshawexit SELECT="'\"@TestMePlease\"'"

@@ -1,0 +1,2 @@
+#!/bin/sh
+docker exec -it $(docker container ls|grep app/entry|awk '{print $1}') sh

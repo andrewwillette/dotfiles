@@ -1,0 +1,4 @@
+#/usr/bin/env bash
+
+currentDir=$(git rev-parse --show-toplevel)
+cd "$currentDir"

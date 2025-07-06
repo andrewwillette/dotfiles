@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+less +F $HOME/git/neovim-plugins/mvn_test/testing.log
+

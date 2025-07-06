@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mvn -Dmaven.javadoc.skip=true -DskipTests=true -DskipITs=true -Ddependency-check.skip=true -Dlicenses.skip=true $*

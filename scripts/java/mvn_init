@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mvn archetype:generate -DgroupId=com.andrewwillette -DartifactId=$1 -DinteractiveMode=false

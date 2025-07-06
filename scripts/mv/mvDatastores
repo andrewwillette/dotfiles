@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# replaces all files matching the find call with regex replacement in sed command
+# big doozy was the xargs -S call, specifying bytes allowed in replacement of -I substitution
+# https://stackoverflow.com/a/24004045/9168060
+
+find . -name "Collaterals*" -print0|xargs -0 -I {} -R 5000 -S 10000 sh -c 'mv "{}" "$(dirname "{}")/`echo $(basename "{}")|sed 's/^Collaterals-datastore/Participants-datastore/I'`"'

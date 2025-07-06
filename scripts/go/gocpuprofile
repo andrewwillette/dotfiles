@@ -1,0 +1,2 @@
+#!/bin/sh
+go test ./$1 -bench=. -cpuprofile cpu.prof && sudo go tool pprof -http localhost:50000 cpu.prof

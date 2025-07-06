@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export JUMPBOX="10.155.80.157"
+export PORT="53443"
+export HOST="userroster-dmstest.db.net"
+ssh -N -L$PORT:$HOST:1521 cloud-user@$JUMPBOX

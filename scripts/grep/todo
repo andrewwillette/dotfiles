@@ -1,0 +1,8 @@
+#!/bin/sh
+typeset -a repos
+repos=(
+"$HOME/git/go-andrewwillette.com"
+"$HOME/git/node-andrewwillette.com"
+"$HOME/git/willette_terminal"
+)
+rg -g !shell_history -g !todo --ignore-case todo "${repos[@]}"

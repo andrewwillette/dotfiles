@@ -1,0 +1,9 @@
+#!/bin/sh
+
+open 'https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/participants-datastore/job/master/'
+open 'https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/collaterals-datastore/job/master/'
+open 'https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/account-attributes-datastore/job/master/'
+open 'https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-coaf-orchestrator/job/master/'
+open 'https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-coaf-dealer-query-orch/job/master/'
+open 'https://prometheusjenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-coaf-loan-query-orch/job/master/'
+open 'https://prometheus2jenkins.cloud.capitalone.com/job/Bogie/job/prometheus/job/pfc-ledger/job/master/'

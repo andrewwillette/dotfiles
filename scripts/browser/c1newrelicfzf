@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+typeset -A newrelicUrls
+newrelicUrls["pfc-nonprod"]='https://onenr.io/07j9O330ywO'
+newrelicUrls["pfc-prod"]='https://onenr.io/0PwJBqEL5w7'
+newrelicUrls["participant-datastore"]='https://onenr.io/0dQeVEyGowe'
+newrelicUrls["collaterals-datastore"]='https://onenr.io/0bRmkP0kZQy'
+newrelicUrls["account-attributes-datastore"]='https://onenr.io/0gR76kegXwo'
+newrelicUrls["transaction-hub uat"]='https://onenr.io/08wo1K6KWjx'
+newrelicUrls["orchestrator-live-metrics"]='https://onenr.io/0ERzlZPqvQr'
+newrelicUrls["loan-query-live"]='https://onenr.io/0Bj3Zv07aRX'
+newrelicUrls["alert policies"]='https://onenr.io/0ERPpLke2RW'
+newrelicUrls["cassandra prod"]='https://onenr.io/08wpleBkWwO'
+newrelicUrls["cassandra nonprod"]='https://onenr.io/0PwJEZWnDQ7'
+newrelicUrls["trex"]='https://onenr.io/02wdKlOLMQE'
+newrelicUrls["uat alerts"]='https://onenr.io/0EjOX2bB0Q6'
+newrelicUrls["cte alerts"]='https://onenr.io/07wkk9XVkwL'
+newrelicUrls["pfc-ledger-api-cte"]='https://onenr.io/07wkZrDrlQL'
+newrelicUrls["traces"]='https://onenr.io/0oR8ypBv6jG'
+newrelicUrls["query data"]='https://onenr.io/0BQ1MnZWVQx'
+newrelicUrls["eod cte dashboard"]='https://onenr.io/0LwGgxEWvw6'
+newrelicUrls["eod prod dashboard"]='https://onenr.io/0EjOoYWdbj6'
+newrelicUrls["SRE Infra dashboard cte / prod"]='https://onenr.io/07jbnn0g0jy'
+
+ARRAY=()
+
+for key val in "${(@kv)newrelicUrls}"; do
+	ARRAY+=($key)
+done
+
+printf "%s\n" "${ARRAY[@]}"|fzf --multi --layout=reverse | while read line ; do
+    open $newrelicUrls[$line]
+done

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Written to copy/paste lines 148 through 153 in a file
+for file in $@; do
+    if [ -f $file ] ; then
+        echo "File is: $file"
+        toCopy=`awk '
+            BEGIN {toCopy=""}
+            NR==132,NR==139 {toCopy = toCopy "\n" $0}
+            END {print toCopy}
+        ' $file`
+        #awk -i inplace -v a="$toCopy" 'NR == 140 {print a} {print}' $file
+        awk -i inplace -v a="$toCopy" 'NR == 140 {print a} {print}' $file
+    else
+        echo "$0 is not a file"
+    fi
+done
+
+exit 0

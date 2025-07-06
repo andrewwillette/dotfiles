@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+newFile=`date +%F`.norg
+echo $newFile

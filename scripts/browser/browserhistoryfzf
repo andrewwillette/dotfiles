@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cols=$(( COLUMNS / 3 ))
+sep='{::}'
+
+defBrowser=$(defaults read ~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure | awk -F'"' '/http;/{print window[(NR)-1]}{window[NR]=$2}')
+if [[ "$defBrowser" =~ "brave" ]]; then
+    cp -f ~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/History /tmp/h
+else
+    cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
+fi
+
+sqlite3 -separator $sep /tmp/h \
+"select substr(title, 1, $cols), url
+ from urls order by last_visit_time desc" |
+awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+fzf --ansi --multi --no-sort --exact --layout=reverse | sed 's#.*\(https*://\)#\1#' | xargs open
