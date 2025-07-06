@@ -37,4 +37,12 @@ for dir in "$DOTFILES_DIR/.config/"*; do
   link_file "$dir" "$CONFIG_DIR/$name"
 done
 
+# --- Configure global .gitignore ---
+GITIGNORE_GLOBAL="$DOTFILES_DIR/git/gitignore_global"
+git config --global core.excludesFile "$GITIGNORE_GLOBAL"
+echo "Set Git global excludesFile to $GITIGNORE_GLOBAL"
+
+# --- Link ~/.gitconfig ---
+link_file "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
+
 echo "✅ Dotfiles installation complete."
