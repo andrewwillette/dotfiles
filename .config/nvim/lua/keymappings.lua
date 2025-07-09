@@ -976,9 +976,7 @@ vim.keymap.set(
   "n",
   "<Leader>dr",
   function()
-    -- currentBuffer = getCurrentBufferAbsolutePath()
-    -- oneoffterminal("jiraclient -parsefilejiras=" .. currentBuffer)
-    oneoffterminaltab("jiraclient -generatedeliveryreport")
+    oneoffterminaltab("jiraclient -deliveryreport")
   end,
   { noremap = true, silent = true }
 )
