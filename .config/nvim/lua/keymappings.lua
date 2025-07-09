@@ -26,7 +26,7 @@ end, { noremap = true, silent = true })
 vim.keymap.set(
   "n", "<Leader>km",
   function()
-    vim.cmd("e ~/git/willette_terminal/.config/nvim/lua/keymappings.lua")
+    vim.cmd("e ~/git/dotfiles/.config/nvim/lua/keymappings.lua")
   end,
   { noremap = true, silent = true })
 
@@ -686,7 +686,7 @@ if ok and fzflua then
     "n", "<Leader>oc",
     function()
       fzflua.git_files({
-        cwd = "~/git/willette_terminal",
+        cwd = "~/git/dotfiles",
       })
     end,
     { noremap = true, silent = true })
