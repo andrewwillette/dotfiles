@@ -2,7 +2,7 @@
 	name = andrewwillette
 	email = willette.andrew1846@gmail.com
 [core]
-	excludesfile = /Users/andrewwillette/git/willette_terminal/.gitignore_global
+	excludesfile = /Users/andrewwillette/git/dotfiles/git/.gitignore_global
 [mergetool "fugitive"]
 	cmd = nvim -f -c \"Gvdiff\" \"$MERGED\"
 [core]
