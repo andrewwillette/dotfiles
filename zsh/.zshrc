@@ -250,7 +250,9 @@ fi
 # export CXXFLAGS="-D_XOPEN_SOURCE=600 -D_DARWIN_C_SOURCE -std=c++17 -stdlib=libc++"
 # hacky, seems default SDK root shown with command 'clang++ -E -x c++ - -v < /dev/null' was pointing to non-existent directory, setting explicitly for now
 # ran into when trying to build lua-language-server
-# export SDKROOT='/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk'
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+export CPLUS_INCLUDE_PATH="$SDKROOT/usr/include/c++/v1:$CPLUS_INCLUDE_PATH"
+export C_INCLUDE_PATH="$SDKROOT/usr/include:$C_INCLUDE_PATH"
 
 # suppresses some rust_analyzer error messages in neovim
 # export RA_LOG=rust_analyzer=error

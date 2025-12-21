@@ -3,6 +3,7 @@ vim.g.mapleader = ' '
 vim.wo.relativenumber = true
 vim.wo.number = true
 
+
 if vim.version()["minor"] >= 9 then
   opt.splitkeep = "screen"
 end
@@ -42,6 +43,8 @@ opt.signcolumn = "number"
 -- global statusline
 opt.laststatus = 3
 
+vim.opt.completeopt = { "menuone", "noselect", "popup" }
+
 vim.g.rustfmt_autosave = 1
 -- local notify = vim.notify
 -- vim.notify = function(msg, ...)
@@ -70,7 +73,7 @@ require("mason-config")
 require("lsp-config")
 
 require("dap-debugger-config")
-require("nvim-cmp-config")
+-- require("nvim-cmp-config")
 require("luasnip-config")
 require("gitsigns-config")
 require("aucmds-config")

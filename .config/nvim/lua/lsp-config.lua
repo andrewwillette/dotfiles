@@ -7,7 +7,7 @@ end
 local willettescripts = require("willette-scripts")
 
 -- keymaps to be configured when attaching LSP server
-function lsp_on_attach()
+function lsp_on_attach(client, bufnr)
   setNormalModeKeyMap(M.keymaps["lsp show details on item"], vim.lsp.buf.hover, {})
   vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
   local ok, fzflua = willettescripts.verifynvimplugin("fzf-lua")
@@ -31,6 +31,7 @@ function lsp_on_attach()
   setNormalModeKeyMap(M.keymaps["lsp diagnostic go to previous"], vim.diagnostic.goto_prev, {})
   setNormalModeKeyMap(M.keymaps["lsp diagnostic go to next"], vim.diagnostic.goto_next, {})
   local lspGroup = vim.api.nvim_create_augroup("lspGroup", { clear = true })
+
   vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()
       local wd = vim.fn.getcwd()
@@ -52,12 +53,21 @@ function lsp_on_attach()
     pattern = { "*.go", "*.scala", "*.lua", "*.rs" },
     group = lspGroup
   })
+
   local filetype = vim.api.nvim_get_option_value('ft', {})
   if filetype == 'c' then
     vim.opt.expandtab = true
     vim.opt.tabstop = 2
     vim.opt.shiftwidth = 2
   end
+
+  vim.lsp.completion.enable(true, client.id, bufnr, {
+    autotrigger = true,
+    convert = function(item)
+      return { abbr = item.label:gsub("%b()", "") }
+    end,
+  })
+  vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
 end
 
 vim.lsp.config.gopls = {
@@ -70,8 +80,6 @@ vim.lsp.config.gopls = {
 local home = os.getenv('HOME')
 local sumneko_root_path = home .. "/git/lua-language-server"
 local sumneko_binary = home .. "/git/lua-language-server/bin/lua-language-server"
-local combined = vim.api.nvim_get_runtime_file("", true)
-combined[#combined + 1] = vim.env.VIMRUNTIME
 
 vim.lsp.config.luals = {
   filetypes = { "lua" },
@@ -82,6 +90,9 @@ vim.lsp.config.luals = {
   -- single_file_support = true,
   settings = {
     Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
       diagnostics = {
         globals = {
           "vim",
