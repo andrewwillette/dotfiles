@@ -44,4 +44,18 @@ hotkey.bind({ "cmd", "alt" }, "[", function()
   grid.setGrid("3x3")
   grid.show()
 end)
-hs.alert.show("Swag")
+
+local function openabletonexercise()
+  local key_module = require("keyofday")
+  if key_module ~= nil then
+    local key = key_module.keyofday()
+    local keyofdayableton = "/Users/andrewwillette/Documents/Production/fiddle_projects/daily_exercises_" ..
+        key .. " Project/daily_exercises_" .. key .. ".als"
+    hs.execute("open '" .. keyofdayableton .. "'")
+    application.launchOrFocus("Ableton Live 12 Standard")
+  end
+end
+
+hotkey.bind({ "cmd", "alt" }, "e", openabletonexercise)
+
+hs.alert.show("Hammerspoon Config Loaded")

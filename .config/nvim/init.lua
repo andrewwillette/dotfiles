@@ -44,6 +44,8 @@ opt.signcolumn = "number"
 opt.laststatus = 3
 
 vim.opt.completeopt = { "menuone", "noselect", "popup" }
+-- looking into issue https://github.com/neovim/neovim/issues/36949
+-- vim.opt.autocomplete = false
 
 vim.g.rustfmt_autosave = 1
 -- local notify = vim.notify
