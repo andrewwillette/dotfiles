@@ -18,7 +18,7 @@ fzflua.setup {
     -- "aboveleft vnew   : split left
     -- Only valid when using a float window
     -- (i.e. when 'split' is not defined, default)
-    height     = 1.0,  -- window height
+    height     = .5,   -- window height
     width      = 1.0,  -- window width
     row        = 0.0,  -- window row position (0=top, 1=bottom)
     col        = 0.50, -- window col position (0=left, 1=right)

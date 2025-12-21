@@ -134,4 +134,11 @@ vim.lsp.config.rust_analyzer = {
   }
 }
 
-vim.lsp.enable({ "gopls", "luals", "bashls", "rust_analyzer" })
+vim.lsp.config.clangd = {
+  filetypes = { "c", "cpp", "objc", "objcpp" },
+  capabilities = lsp_capabilities,
+  on_attach = lsp_on_attach,
+  cmd = { "clangd" },
+}
+
+vim.lsp.enable({ "gopls", "luals", "bashls", "rust_analyzer", "clangd" })

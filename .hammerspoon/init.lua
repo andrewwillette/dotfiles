@@ -56,6 +56,6 @@ local function openabletonexercise()
   end
 end
 
-hotkey.bind({ "cmd", "alt" }, "e", openabletonexercise)
+hotkey.bind({ "cmd", "ctrl" }, "e", openabletonexercise)
 
 hs.alert.show("Hammerspoon Config Loaded")
