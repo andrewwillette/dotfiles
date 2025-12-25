@@ -441,7 +441,7 @@ fzflua.setup {
       -- fzf-lua to not close the fzf window, this way we
       -- can resume the buffers picker on the same window
       -- eliminating an otherwise unaesthetic win "flash"
-      ["ctrl-x"] = { actions.buf_del, actions.resume },
+      ["ctrl-x"] = { fn = actions.buf_del, reload = true },
     }
   },
   tabs              = {
