@@ -599,20 +599,6 @@ if ok and fzflua then
     { noremap = true, silent = true })
 end
 
-local ok, avante = verify_nvim_plugin("avante")
-if ok and avante then
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'AvanteTodos',
-    callback = function(ctx)
-      vim.api.nvim_echo({ { "calling this!", "Normal" } }, false, {})
-      vim.keymap.set('n', '<leader>d', function()
-        vim.api.nvim_echo({ { "calling this2!", "Normal" } }, false, {})
-        require('avante').get():update_todos {}
-      end, { buffer = ctx.buf })
-    end,
-  })
-end
-
 local ok, gitsigns = verify_nvim_plugin("gitsigns")
 if ok and gitsigns then
   vim.keymap.set("n", M.keymaps["toggle gitsigns plugin"],
