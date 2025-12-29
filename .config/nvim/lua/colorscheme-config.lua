@@ -1,15 +1,15 @@
 local M = {}
 
-local verifyPlugin = require("willette-scripts").verifynvimplugin
-local verifyVimCmd = require("willette-scripts").verifyvimcommand
+local verify_plugin = require("willette-scripts").verify_nvim_plugin
+local verify_vim_cmd = require("willette-scripts").verify_vim_command
 
-local function setLualine(scheme)
-  local ok, llc = verifyPlugin("lualine-config")
+local function set_lualine(scheme)
+  local ok, llc = verify_plugin("lualine-config")
   if not ok or llc == nil then return end
-  llc.setTheme(scheme)
+  llc.set_theme(scheme)
 end
 
-local function monokaiPro()
+local function monokai_pro()
   require("monokai-pro").setup({
     transparent_background = false,
     terminal_colors = true,
@@ -43,7 +43,7 @@ local function monokaiPro()
     override = function(c) end,
   })
   vim.cmd [[colorscheme monokai-pro]]
-  setLualine("monokai-pro")
+  set_lualine("monokai-pro")
 end
 
 local function onedark()
@@ -94,7 +94,7 @@ local function moonfly()
   vim.cmd [[colorscheme moonfly]]
 end
 
-local function githubLight()
+local function github_light()
   require("github-theme").setup({
     comment_style = "NONE",
     keyword_style = "NONE",
@@ -119,7 +119,7 @@ local function githubLight()
 end
 
 local function tundra()
-  local ok, nvimtundra = verifyPlugin("nvim-tundra")
+  local ok, nvimtundra = verify_plugin("nvim-tundra")
   if not ok or nvimtundra == nil then return end
   nvimtundra.setup({
     transparent_background = false,
@@ -163,11 +163,11 @@ local function tundra()
   })
   vim.opt.background = 'dark'
   vim.cmd('colorscheme tundra')
-  setLualine("codedark")
+  set_lualine("codedark")
 end
 
 local function kanagawa()
-  local ok, kanag = verifyPlugin("kanagawa")
+  local ok, kanag = verify_plugin("kanagawa")
   if not ok or kanag == nil then return end
   kanag.setup({
     compile = false,  -- enable compiling the colorscheme
@@ -195,32 +195,32 @@ local function kanagawa()
   })
   -- setup must be called before loading
   vim.cmd("colorscheme kanagawa")
-  setLualine("nightfly")
+  set_lualine("nightfly")
 end
 
-local function kanagawaBones()
+local function kanagawa_bones()
   vim.o.background = "dark"
   vim.g.seoulbones = { italic_comments = false }
-  if not verifyVimCmd("colorscheme kanagawabones") then return end
-  setLualine("codedark")
+  if not verify_vim_cmd("colorscheme kanagawabones") then return end
+  set_lualine("codedark")
 end
 
-local function seoulbonesDark()
+local function seoulbones_dark()
   vim.o.background = "dark"
   vim.g.seoulbones = { italic_comments = false }
-  if not verifyVimCmd("colorscheme seoulbones") then return end
-  setLualine("seoul256")
+  if not verify_vim_cmd("colorscheme seoulbones") then return end
+  set_lualine("seoul256")
 end
 
-local function seoulbonesLight()
+local function seoulbones_light()
   vim.o.background = "light"
   vim.g.seoulbones = { italic_comments = false }
-  if not verifyVimCmd("colorscheme seoulbones") then return end
-  setLualine("seoul256")
+  if not verify_vim_cmd("colorscheme seoulbones") then return end
+  set_lualine("seoul256")
 end
 
-local function configureCatppuccin()
-  local ok, catppuccin = verifyPlugin("catppuccin")
+local function configure_catppuccin()
+  local ok, catppuccin = verify_plugin("catppuccin")
   if not ok or catppuccin == nil then return end
   catppuccin.setup({
     dim_inactive = {
@@ -309,57 +309,57 @@ local function configureCatppuccin()
   return catppuccin
 end
 
-local function catpuccinLightLatte()
-  configureCatppuccin()
+local function catpuccin_light_latte()
+  configure_catppuccin()
   vim.g.catppuccin_flavour = "latte"
-  if not verifyVimCmd("colorscheme catppuccin") then
+  if not verify_vim_cmd("colorscheme catppuccin") then
     return
   end
-  setLualine("onelight")
+  set_lualine("onelight")
 end
 
-local function catpuccinDarkFrappe()
-  configureCatppuccin()
+local function catpuccin_dark_frappe()
+  configure_catppuccin()
   vim.g.catppuccin_flavour = "frappe"
-  if not verifyVimCmd("colorscheme catppuccin") then return end
-  setLualine("horizon")
+  if not verify_vim_cmd("colorscheme catppuccin") then return end
+  set_lualine("horizon")
 end
 
-local function catpuccinDarkMacchiato()
-  configureCatppuccin()
+local function catpuccin_dark_macchiato()
+  configure_catppuccin()
   vim.g.catppuccin_flavour = "macchiato"
-  if not verifyVimCmd("colorscheme catppuccin") then return end
-  setLualine("horizon")
+  if not verify_vim_cmd("colorscheme catppuccin") then return end
+  set_lualine("horizon")
 end
 
-local function catpuccinDarkMocha()
-  configureCatppuccin()
+local function catpuccin_dark_mocha()
+  configure_catppuccin()
   vim.g.catppuccin_flavour = "mocha"
-  if not verifyVimCmd("colorscheme catppuccin") then return end
-  setLualine("horizon")
+  if not verify_vim_cmd("colorscheme catppuccin") then return end
+  set_lualine("horizon")
 end
 
-local function greenIsGood()
+local function green_is_good()
   vim.o.background = "dark"
-  if not verifyVimCmd("colorscheme greenisgood") then return end
-  setLualine("codedark")
+  if not verify_vim_cmd("colorscheme greenisgood") then return end
+  set_lualine("codedark")
 end
 
 local function monochrome()
   vim.o.background = "dark"
-  if not verifyVimCmd("colorscheme monochrome") then return end
-  setLualine("codedark")
+  if not verify_vim_cmd("colorscheme monochrome") then return end
+  set_lualine("codedark")
 end
 
-local gruvboxMaterial = function()
+local gruvbox_material = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   vim.g.gruvbox_material_disable_italic_comment = 0
-  if not verifyVimCmd("colorscheme gruvbox-material") then return end
-  setLualine("gruvbox_dark")
+  if not verify_vim_cmd("colorscheme gruvbox-material") then return end
+  set_lualine("gruvbox_dark")
 end
 
-local gruvboxLight = function()
+local gruvbox_light = function()
   vim.o.background = "light"
   require("gruvbox").setup({
     undercurl = false,
@@ -379,10 +379,10 @@ local gruvboxLight = function()
     transparent_mode = false,
   })
   vim.cmd("colorscheme gruvbox")
-  setLualine("gruvbox_light")
+  set_lualine("gruvbox_light")
 end
 
-local gruvboxDark = function()
+local gruvbox_dark = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   vim.g.gruvbox_italics = 0
@@ -410,11 +410,11 @@ local gruvboxDark = function()
     transparent_mode = false,
   })
   vim.cmd("colorscheme gruvbox")
-  setLualine("gruvbox_dark")
+  set_lualine("gruvbox_dark")
 end
 
 local function rosepine(bg)
-  ok, rosepine = verifyPlugin("rose-pine")
+  ok, rosepine = verify_plugin("rose-pine")
   if not ok or rosepine == nil then return end
   rosepine.setup({
     --- @usage 'main' | 'moon'
@@ -460,35 +460,35 @@ local function rosepine(bg)
   vim.cmd("colorscheme rose-pine")
 end
 
-local rosepineLight = function()
+local rosepine_light = function()
   rosepine "light"
-  setLualine("ayu_light")
+  set_lualine("ayu_light")
 end
 
-local rosepineDark = function()
+local rosepine_dark = function()
   rosepine "dark"
-  setLualine("ayu_dark")
+  set_lualine("ayu_dark")
 end
 
-local duskfoxDark = function()
+local duskfox_dark = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
-  if not verifyVimCmd("colorscheme duskfox") then return end
-  setLualine("palenight")
+  if not verify_vim_cmd("colorscheme duskfox") then return end
+  set_lualine("palenight")
 end
 
-local nightfoxDark = function()
+local nightfox_dark = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   vim.cmd("colorscheme nightfox")
-  setLualine("palenight")
+  set_lualine("palenight")
 end
 
-local dayfoxLight = function()
+local dayfox_light = function()
   vim.opt.termguicolors = true
   vim.o.background = "light"
-  if not verifyVimCmd("colorscheme dayfox") then return end
-  setLualine("ayu_light")
+  if not verify_vim_cmd("colorscheme dayfox") then return end
+  set_lualine("ayu_light")
 end
 
 local everforest = function()
@@ -497,30 +497,30 @@ local everforest = function()
 end
 
 local colorscheme_table = {
-  ["gruvbox dark"] = gruvboxDark,
-  ["gruvbox light"] = gruvboxLight,
-  ["gruvbox material"] = gruvboxMaterial,
-  ["rosepine light"] = rosepineLight,
-  ["rosepine dark"] = rosepineDark,
-  ["duskfox dark"] = duskfoxDark,
-  ["dayfox light"] = dayfoxLight,
-  ["nightfox dark"] = nightfoxDark,
-  ["greenisgood dark"] = greenIsGood,
+  ["gruvbox dark"] = gruvbox_dark,
+  ["gruvbox light"] = gruvbox_light,
+  ["gruvbox material"] = gruvbox_material,
+  ["rosepine light"] = rosepine_light,
+  ["rosepine dark"] = rosepine_dark,
+  ["duskfox dark"] = duskfox_dark,
+  ["dayfox light"] = dayfox_light,
+  ["nightfox dark"] = nightfox_dark,
+  ["greenisgood dark"] = green_is_good,
   ["monochrome dark"] = monochrome,
-  ["seoulbones dark"] = seoulbonesDark,
-  ["seoulbones light"] = seoulbonesLight,
-  ["catppuncin light latte"] = catpuccinLightLatte,
-  ["catppuncin dark mocha"] = catpuccinDarkMocha,
-  ["catppuncin dark frappe"] = catpuccinDarkFrappe,
-  ["catppuncin dark macchiato"] = catpuccinDarkMacchiato,
-  ["kanagawabones"] = kanagawaBones,
+  ["seoulbones dark"] = seoulbones_dark,
+  ["seoulbones light"] = seoulbones_light,
+  ["catppuncin light latte"] = catpuccin_light_latte,
+  ["catppuncin dark mocha"] = catpuccin_dark_mocha,
+  ["catppuncin dark frappe"] = catpuccin_dark_frappe,
+  ["catppuncin dark macchiato"] = catpuccin_dark_macchiato,
+  ["kanagawabones"] = kanagawa_bones,
   ["kanagawa"] = kanagawa,
   ["tundra"] = tundra,
   ["moonfly"] = moonfly,
   ["onedark"] = onedark,
-  ["monokaipro"] = monokaiPro,
+  ["monokaipro"] = monokai_pro,
   ["everforest"] = everforest,
-  ["githubLight"] = githubLight,
+  ["github_light"] = github_light,
 }
 
 local colorscheme_select = {}
@@ -570,7 +570,7 @@ local function search_and_replace(filename, search_string, replacement)
   os.rename(tmp_filename, filename) -- Rename the temporary file
 end
 
-M.selectColorscheme = function()
+M.select_colorscheme = function()
   require 'fzf-lua'.fzf_exec(colorscheme_select, {
     actions = {
       ['default'] = function(selected)
@@ -580,5 +580,5 @@ M.selectColorscheme = function()
   })
 end
 
-gruvboxDark()
+gruvbox_dark()
 return M

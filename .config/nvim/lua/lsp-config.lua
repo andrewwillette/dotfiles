@@ -1,36 +1,36 @@
 lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local M = require("keymappings")
-local setNormalModeKeyMap = function(lhs, rhsFunc, opts)
-  vim.keymap.set("n", lhs, function() rhsFunc() end, opts)
+local set_normal_mode_keymap = function(lhs, rhs_func, opts)
+  vim.keymap.set("n", lhs, function() rhs_func() end, opts)
 end
 local willettescripts = require("willette-scripts")
 
 -- keymaps to be configured when attaching LSP server
 function lsp_on_attach(client, bufnr)
-  setNormalModeKeyMap(M.keymaps["lsp show details on item"], vim.lsp.buf.hover, {})
+  set_normal_mode_keymap(M.keymaps["lsp show details on item"], vim.lsp.buf.hover, {})
   vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
-  local ok, fzflua = willettescripts.verifynvimplugin("fzf-lua")
+  local ok, fzflua = willettescripts.verify_nvim_plugin("fzf-lua")
   if ok and fzflua then
     vim.keymap.set(
       "n", "<Leader>a",
       fzflua.lsp_code_actions,
       {})
-    setNormalModeKeyMap(M.keymaps["lsp go to definition"], fzflua.lsp_definitions, {})
-    setNormalModeKeyMap(M.keymaps["lsp get references"], fzflua.lsp_references, {})
-    setNormalModeKeyMap(M.keymaps["lsp get implementations"], fzflua.lsp_implementations, {})
+    set_normal_mode_keymap(M.keymaps["lsp go to definition"], fzflua.lsp_definitions, {})
+    set_normal_mode_keymap(M.keymaps["lsp get references"], fzflua.lsp_references, {})
+    set_normal_mode_keymap(M.keymaps["lsp get implementations"], fzflua.lsp_implementations, {})
     vim.keymap.set(
       "n", M.keymaps["lsp document symbols"],
       function()
         fzflua.lsp_document_symbols({})
       end,
       {})
-    setNormalModeKeyMap(M.keymaps["lsp type definitions"], fzflua.lsp_typedefs, {})
+    set_normal_mode_keymap(M.keymaps["lsp type definitions"], fzflua.lsp_typedefs, {})
   end
-  setNormalModeKeyMap(M.keymaps["lsp rename variable"], vim.lsp.buf.rename, {})
-  setNormalModeKeyMap(M.keymaps["lsp diagnostic go to previous"], vim.diagnostic.goto_prev, {})
-  setNormalModeKeyMap(M.keymaps["lsp diagnostic go to next"], vim.diagnostic.goto_next, {})
-  local lspGroup = vim.api.nvim_create_augroup("lspGroup", { clear = true })
+  set_normal_mode_keymap(M.keymaps["lsp rename variable"], vim.lsp.buf.rename, {})
+  set_normal_mode_keymap(M.keymaps["lsp diagnostic go to previous"], vim.diagnostic.goto_prev, {})
+  set_normal_mode_keymap(M.keymaps["lsp diagnostic go to next"], vim.diagnostic.goto_next, {})
+  local lsp_group = vim.api.nvim_create_augroup("lsp_group", { clear = true })
 
   vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()
@@ -51,7 +51,7 @@ function lsp_on_attach(client, bufnr)
       end
     end,
     pattern = { "*.go", "*.scala", "*.lua", "*.rs" },
-    group = lspGroup
+    group = lsp_group
   })
 
   local filetype = vim.api.nvim_get_option_value('ft', {})

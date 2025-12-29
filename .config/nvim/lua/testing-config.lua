@@ -34,7 +34,7 @@ require("neotest").setup({
 local neotest = require("neotest")
 local km = require("keymappings")
 
-local testCallbackRust = function()
+local test_callback_rust = function()
   vim.keymap.set("n", km.keymaps["test nearest"], function()
       vim.api.nvim_echo({ { "calling testcallbackrust test nearest!", "Normal" } }, false, {})
       neotest.run.run({ args = "-- --nocapture" })
@@ -47,7 +47,7 @@ local testCallbackRust = function()
     { noremap = true, silent = false })
 end
 
-local testCallbackGo = function()
+local test_callback_go = function()
   vim.keymap.set("n", km.keymaps["test nearest"], function()
       vim.api.nvim_echo({ { "calling testcallbackgo test nearest!", "Normal" } }, false, {})
       neotest.run.run({ args = "-v -count=1" })
@@ -94,9 +94,9 @@ vim.keymap.set("n", km.keymaps["run last test, test last"], function()
   end,
   { noremap = true, silent = false })
 
-local verifynvimplugin = require("willette-scripts").verifynvimplugin
+local verify_nvim_plugin = require("willette-scripts").verify_nvim_plugin
 
-if verifynvimplugin("plenary") then
+if verify_nvim_plugin("plenary") then
   vim.keymap.set("n", km.keymaps["execute plenary test on file"], "<Plug>PlenaryTestFile",
     { noremap = false, silent = false })
 end

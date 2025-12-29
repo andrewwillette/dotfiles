@@ -1,4 +1,4 @@
-local ok, ls = require "willette-scripts".verifynvimplugin "luasnip"
+local ok, ls = require "willette-scripts".verify_nvim_plugin "luasnip"
 if not ok or ls == nil then return end
 
 vim.api.nvim_command("hi LuasnipChoiceNodePassive cterm=italic")

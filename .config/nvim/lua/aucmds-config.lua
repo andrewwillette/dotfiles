@@ -1,6 +1,6 @@
 local opt = vim.opt
 
-local mainAutoGroup = vim.api.nvim_create_augroup("mainAuGrp", { clear = true })
+local main_auto_group = vim.api.nvim_create_augroup("main_au_grp", { clear = true })
 
 local keymappings = require("keymappings")
 -- vim.api.nvim_create_autocmd("BufEnter",
@@ -12,7 +12,7 @@ local keymappings = require("keymappings")
 --       keymappings.testCallbackGo()
 --     end,
 --     pattern = "*.go",
---     group = mainAutoGroup
+--     group = main_auto_group
 --   })
 
 -- vim.api.nvim_create_autocmd("BufEnter",
@@ -21,7 +21,7 @@ local keymappings = require("keymappings")
 --       keymappings.testCallbackRust()
 --     end,
 --     pattern = "*.rs",
---     group = mainAutoGroup
+--     group = main_auto_group
 --   })
 vim.api.nvim_create_autocmd("BufEnter",
   {
@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd("BufEnter",
       opt.shiftwidth = 4
     end,
     pattern = "*.lua",
-    group = mainAutoGroup
+    group = main_auto_group
   })
 
 vim.api.nvim_create_autocmd("BufRead",
@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd("BufRead",
       vim.cmd("TSBufToggle highlight")
     end,
     pattern = { "*.norg", "*.md" },
-    group = mainAutoGroup
+    group = main_auto_group
   })
 
 vim.api.nvim_create_autocmd("BufEnter",
@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd("BufEnter",
       vim.bo.filetype = "lua"
     end,
     pattern = "*.nse",
-    group = mainAutoGroup
+    group = main_auto_group
   })
 vim.api.nvim_create_autocmd({ "BufEnter", "BufRead" },
   {
@@ -61,7 +61,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufRead" },
       vim.bo.filetype = "yaml"
     end,
     pattern = { "Gearsfile", "Bogiefile" },
-    group = mainAutoGroup
+    group = main_auto_group
   })
 vim.api.nvim_create_autocmd({ "BufEnter", "BufRead", "BufReadPre" },
   {
@@ -69,7 +69,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufRead", "BufReadPre" },
       vim.bo.filetype = "sql"
     end,
     pattern = "*.cql",
-    group = mainAutoGroup
+    group = main_auto_group
   })
 vim.api.nvim_create_autocmd("BufEnter",
   {
@@ -77,7 +77,7 @@ vim.api.nvim_create_autocmd("BufEnter",
       vim.bo.filetype = "json"
     end,
     pattern = "*.avsc",
-    group = mainAutoGroup
+    group = main_auto_group
   })
 vim.api.nvim_create_autocmd("BufEnter",
   {
@@ -85,7 +85,7 @@ vim.api.nvim_create_autocmd("BufEnter",
       vim.bo.filetype = "scala"
     end,
     pattern = "*.sbt",
-    group = mainAutoGroup
+    group = main_auto_group
   })
 -- use tabs for filetype=template
 vim.api.nvim_create_autocmd("FileType",
@@ -96,7 +96,7 @@ vim.api.nvim_create_autocmd("FileType",
       opt.expandtab = false
     end,
     pattern = "template",
-    group = mainAutoGroup
+    group = main_auto_group
   })
 vim.api.nvim_create_autocmd("FileType",
   {
@@ -106,7 +106,7 @@ vim.api.nvim_create_autocmd("FileType",
       opt.expandtab = true
     end,
     pattern = { "css", "json" },
-    group = mainAutoGroup
+    group = main_auto_group
   })
 
 vim.api.nvim_create_augroup("TxtReadMode", { clear = true })

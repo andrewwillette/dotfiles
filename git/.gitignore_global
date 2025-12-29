@@ -23,6 +23,5 @@ Session.vim
 .ccls-cache
 **/.ccls-cache
 luarc.json
-**/CLAUDE.md
 
 pyrightconfig.json

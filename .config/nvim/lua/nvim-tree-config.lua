@@ -1,6 +1,6 @@
-local ok, nvimTree = require("willette-scripts").verifynvimplugin("nvim-tree")
-if not ok or nvimTree == nil then return end
-nvimTree.setup {
+local ok, nvim_tree = require("willette-scripts").verify_nvim_plugin("nvim-tree")
+if not ok or nvim_tree == nil then return end
+nvim_tree.setup {
   sync_root_with_cwd  = true,
   respect_buf_cwd     = true,
   update_focused_file = {
@@ -74,13 +74,13 @@ nvimTree.setup {
 }
 
 local km = require("keymappings")
-local nvimtreeApi = require("nvim-tree.api")
+local nvim_tree_api = require("nvim-tree.api")
 
 vim.keymap.set(
   "n",
   km.keymaps["open file tree"],
   function()
-    nvimtreeApi.tree.toggle({ path = vim.fn.getcwd() })
+    nvim_tree_api.tree.toggle({ path = vim.fn.getcwd() })
   end,
   {})
 
@@ -88,6 +88,6 @@ vim.keymap.set(
   "n",
   km.keymaps["open file tree on current buffer"],
   function()
-    nvimtreeApi.tree.find_file({ open = true, focus = true })
+    nvim_tree_api.tree.find_file({ open = true, focus = true })
   end,
   {})

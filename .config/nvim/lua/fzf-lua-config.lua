@@ -1,7 +1,7 @@
 local willettescripts = require("willette-scripts")
-local ok, fzflua = willettescripts.verifynvimplugin("fzf-lua")
+local ok, fzflua = willettescripts.verify_nvim_plugin("fzf-lua")
 
-if not ok or fzflua == nil then
+if not ok then
   return
 end
 
@@ -453,7 +453,7 @@ fzflua.setup {
     actions     = {
       -- actions inherit from 'actions.buffers' and merge
       ["default"] = actions.buf_switch,
-      ["ctrl-x"]  = { actions.buf_del, actions.resume },
+      ["ctrl-x"]  = { fn = actions.buf_del, reload = true },
     },
     fzf_opts    = {
       -- hide tabnr

@@ -142,9 +142,9 @@ M.keymaps = {
 }
 
 local willettescripts = require("willette-scripts")
-local verifynvimplugin = willettescripts.verifynvimplugin
-local oneoffterminal = willettescripts.oneoffterminal
-local oneoffterminaltab = willettescripts.oneoffterminaltab
+local verify_nvim_plugin = willettescripts.verify_nvim_plugin
+local one_off_terminal = willettescripts.one_off_terminal
+local one_off_terminal_tab = willettescripts.one_off_terminal_tab
 
 -- Lightweight grouping modular mappings
 local function km(mode, lhs, rhs, desc, opts)
@@ -155,7 +155,7 @@ end
 
 local function setup_general()
   -- should use "open keymap file" key from map
-  km("n", M.keymaps["open Jira client"], function() oneoffterminal("jiraclient") end, "Open Jira client")
+  km("n", M.keymaps["open Jira client"], function() one_off_terminal("jiraclient") end, "Open Jira client")
   km("n", M.keymaps["clear search highlight"], function() vim.cmd("nohlsearch") end, "Clear search highlight")
   km("n", M.keymaps["show current file path"], function() vim.cmd("echo expand('%:p')") end, "Show current file path")
   km("n", M.keymaps["open keymap file"], function() vim.cmd("e ~/git/dotfiles/.config/nvim/lua/keymappings.lua") end,
@@ -168,8 +168,8 @@ setup_general()
 vim.keymap.set("n", M.keymaps["no-op leader"], function() end)
 
 vim.keymap.set("n", M.keymaps["toggle word wrapping"], function()
-    local isWrap = vim.cmd('se wrap?')
-    if (isWrap == 'wrap') then
+    local is_wrap = vim.cmd('se wrap?')
+    if (is_wrap == 'wrap') then
       vim.cmd('set wrap')
     else
       vim.cmd('set wrap!')
@@ -271,7 +271,7 @@ vim.keymap.set("n", M.keymaps["close help pane"], function()
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["waste my time"], function()
-    oneoffterminal("waste_time|bash")
+    one_off_terminal("waste_time|bash")
   end,
   { noremap = true })
 
@@ -307,52 +307,52 @@ vim.keymap.set("n", M.keymaps["close tab"],
 
 vim.keymap.set("n", M.keymaps["chmod current buffer to be executable"],
   function()
-    willettescripts.chmod0777currentbuf()
+    willettescripts.chmod_0777_currentbuf()
   end,
   { noremap = true, silent = true })
 
 vim.keymap.set("n", M.keymaps["select colorscheme"],
   function()
-    require("willette-scripts.colorschemes").selectcolorscheme()
+    require("willette-scripts.colorschemes").select_colorscheme()
   end,
   {})
 
 vim.keymap.set("n", M.keymaps["toggle htop"], function()
-    oneoffterminaltab("htop")
+    one_off_terminal_tab("htop")
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["select and open ableton project"], function()
-    oneoffterminaltab("open_ableton_fiddle_project.sh")
+    willettescripts.init_split_term("open_ableton_fiddle_project.sh")
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["toggle lazy docker"], function()
-    oneoffterminaltab("lazydocker")
+    one_off_terminal_tab("lazydocker")
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["select and open git project with intellij"], function()
-    oneoffterminaltab("ig")
+    one_off_terminal_tab("ig")
   end,
   { noremap = true })
 
-local function isInteger(str)
+local function is_integer(str)
   return not (str == "" or str:find("%D")) -- str:match("%D") also works
 end
 
 vim.keymap.set("n", M.keymaps["make jira document"], function()
     vim.ui.input({ prompt = "New Kunai JIRA TODO Doc: " }, function(input)
       local filename = ""
-      local jiraPrefix = "FINCORE-"
-      if (isInteger(input)) then
-        filename = jiraPrefix .. input .. ".md"
+      local jira_prefix = "FINCORE-"
+      if (is_integer(input)) then
+        filename = jira_prefix .. input .. ".md"
       else
         filename = input .. ".md"
       end
-      local newFile = "~/git/manual/employment/kunai/tasks_todo/" .. filename
-      vim.cmd("!touch " .. newFile)
-      vim.cmd("e " .. newFile)
+      local new_file = "~/git/manual/employment/kunai/tasks_todo/" .. filename
+      vim.cmd("!touch " .. new_file)
+      vim.cmd("e " .. new_file)
       vim.cmd("w")
     end)
   end,
@@ -362,40 +362,40 @@ vim.keymap.set("n", M.keymaps["mark jira document as done"], function()
     -- get current file
     local filepath = vim.fn.expand('%')
     local filename = vim.fn.expand('%:t')
-    local doneFilepath = "./jira/done/" .. filename
-    os.rename(filepath, doneFilepath)
-    vim.cmd("e " .. doneFilepath)
+    local done_filepath = "./jira/done/" .. filename
+    os.rename(filepath, done_filepath)
+    vim.cmd("e " .. done_filepath)
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["make meeting document"], function()
     vim.ui.input({ prompt = "New Meeting Name: " }, function(input)
       local date = os.date("%Y-%m-%d")
-      local newFile = "~/git/manual/employment/kunai/tasks_todo/" .. date .. "-" .. input .. ".md"
-      vim.cmd("e " .. newFile)
+      local new_file = "~/git/manual/employment/kunai/tasks_todo/" .. date .. "-" .. input .. ".md"
+      vim.cmd("e " .. new_file)
       vim.cmd("w")
     end)
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["browser history selector"], function()
-    oneoffterminaltab("browserhistoryfzf")
+    one_off_terminal_tab("browserhistoryfzf")
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["go run current project"], function()
-    oneoffterminaltab "go run ."
+    one_off_terminal_tab "go run ."
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["open terminal for current project"],
   function()
-    willettescripts.terminalgit()
+    willettescripts.terminal_git()
   end,
   {})
 
 vim.keymap.set("n", M.keymaps["open terminal for current buffer"], function()
-    willettescripts.terminalbuffer()
+    willettescripts.terminal_buffer()
   end,
   { noremap = true })
 
@@ -417,7 +417,7 @@ vim.keymap.set("n", M.keymaps["open calendar"],
   end,
   { noremap = true, silent = true })
 
-local ok, fzflua = verifynvimplugin("fzf-lua")
+local ok, fzflua = verify_nvim_plugin("fzf-lua")
 if ok and fzflua then
   vim.keymap.set("n", M.keymaps["select vim command"],
     function()
@@ -473,9 +473,9 @@ if ok and fzflua then
       fzflua.fzf_exec("ls ~/git", {
         actions = {
           ['default'] = function(selected)
-            local dirToOpen = "~/git/" .. selected[1]
+            local dir_to_open = "~/git/" .. selected[1]
             local pwd = vim.api.nvim_command_output("pwd")
-            vim.cmd("cd " .. dirToOpen)
+            vim.cmd("cd " .. dir_to_open)
             vim.cmd("silent !gho")
             vim.cmd("cd " .. pwd)
           end
@@ -539,9 +539,9 @@ if ok and fzflua then
       fzflua.fzf_exec("ls ~/git", {
         actions = {
           ['default'] = function(selected)
-            local dirToOpen = "~/git/" .. selected[1]
+            local dir_to_open = "~/git/" .. selected[1]
             local pwd = vim.api.nvim_command_output("pwd")
-            willettescripts.initsplitterm("cd " .. dirToOpen .. "; exec zsh;")
+            willettescripts.init_split_term("cd " .. dir_to_open .. "; exec zsh;")
             vim.cmd("cd " .. pwd)
           end
         }
@@ -599,7 +599,7 @@ if ok and fzflua then
     { noremap = true, silent = true })
 end
 
-local ok, avante = verifynvimplugin("avante")
+local ok, avante = verify_nvim_plugin("avante")
 if ok and avante then
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'AvanteTodos',
@@ -613,7 +613,7 @@ if ok and avante then
   })
 end
 
-local ok, gitsigns = verifynvimplugin("gitsigns")
+local ok, gitsigns = verify_nvim_plugin("gitsigns")
 if ok and gitsigns then
   vim.keymap.set("n", M.keymaps["toggle gitsigns plugin"],
     function()
@@ -622,7 +622,7 @@ if ok and gitsigns then
     { noremap = true, silent = true })
 end
 
-local ok, ls = verifynvimplugin("luasnip")
+local ok, ls = verify_nvim_plugin("luasnip")
 if ok and ls then
   vim.keymap.set({ "i", "s" }, M.keymaps["luasnip jump forward"], function()
     if ls.expand_or_jumpable() then
@@ -674,7 +674,7 @@ vim.keymap.set("n", M.keymaps["quickfix previous"], function()
 end, { silent = true })
 
 ---@diagnostic disable-next-line: unused-function, unused-local
-local function getWordUnderCursor()
+local function get_word_under_cursor()
   local word = vim.call('expand', '<cWORD>')
   print(word)
   return word
@@ -684,8 +684,8 @@ vim.keymap.set("n", M.keymaps["open url under cursor"],
   "<Plug>(open-url-browser)")
 
 -- debugging keymaps
-local dapInstalled, dap = require("willette-scripts").verifynvimplugin("dap")
-if dapInstalled and dap then
+local dap_installed, dap = require("willette-scripts").verify_nvim_plugin("dap")
+if dap_installed and dap then
   local dapgo = require("dap-go")
   require("nvim-dap-virtual-text").setup()
   dapgo.setup()
@@ -704,13 +704,13 @@ if dapInstalled and dap then
   vim.keymap.set("n", M.keymaps["debugger debug go test"], dapgo.debug_test)
 end
 
-local setNormalModeKeyMap = function(lhs, rhsFunc, opts)
-  vim.keymap.set("n", lhs, function() rhsFunc() end, opts)
+local set_normal_mode_keymap = function(lhs, rhs_func, opts)
+  vim.keymap.set("n", lhs, function() rhs_func() end, opts)
 end
 
 -- "gp" is gp prompt
-if verifynvimplugin("gp") then
-  local function keymapOptions(desc)
+if verify_nvim_plugin("gp") then
+  local function keymap_options(desc)
     return {
       noremap = true,
       silent = true,
@@ -719,14 +719,14 @@ if verifynvimplugin("gp") then
     }
   end
   vim.keymap.set("n", M.keymaps["open AI prompt window"],
-    "<cmd>GpChatToggle<cr>", keymapOptions("Open most recent chat"))
+    "<cmd>GpChatToggle<cr>", keymap_options("Open most recent chat"))
   vim.keymap.set("n", M.keymaps["open new AI prompt window"],
-    "<cmd>GpChatNew<cr>", keymapOptions("New Chat"))
+    "<cmd>GpChatNew<cr>", keymap_options("New Chat"))
   -- gpt prompt pk
   vim.keymap.set("n", M.keymaps["pick from previous AI prompt chats"],
-    "<cmd>GpChatFinder<cr>", keymapOptions("Select existing chat"))
+    "<cmd>GpChatFinder<cr>", keymap_options("Select existing chat"))
   vim.keymap.set("v", "<leader>gpp",
-    ":<C-u>'<,'>GpChatPaste<cr>", keymapOptions("Paste selection to prompt"))
+    ":<C-u>'<,'>GpChatPaste<cr>", keymap_options("Paste selection to prompt"))
 end
 
 -- urlencode I copied off internet
@@ -737,23 +737,23 @@ local function urlencode(str)
   return str
 end
 
-setNormalModeKeyMap("<leader>ggl", function()
+set_normal_mode_keymap("<leader>ggl", function()
   vim.ui.input({ prompt = "googlesearch: " }, function(input)
     os.execute("open " .. "https://google.com/search?q=" .. urlencode(input))
   end)
 end, {})
 
-local function getCurrentBufferAbsolutePath()
+local function get_current_buffer_absolute_path()
   return vim.call('expand', '%:p')
 end
 
 -- leetcode test - add test to leetcode testing file
 vim.keymap.set("n", M.keymaps["create leetcode test"], function()
-  currentBuffer = getCurrentBufferAbsolutePath()
-  vim.api.nvim_exec("!creategotest " .. currentBuffer, false)
+  current_buffer = get_current_buffer_absolute_path()
+  vim.api.nvim_exec("!creategotest " .. current_buffer, false)
 end, { silent = true })
 
-local ok, browserbookmarks = verifynvimplugin("browser_bookmarks")
+local ok, browserbookmarks = verify_nvim_plugin("browser_bookmarks")
 if ok and browserbookmarks then
   vim.keymap.set("n", M.keymaps["select browser bookmark"],
     browserbookmarks.select,
@@ -761,7 +761,7 @@ if ok and browserbookmarks then
   )
 end
 
-local ok, browsemarks = verifynvimplugin("browsemarks")
+local ok, browsemarks = verify_nvim_plugin("browsemarks")
 if ok and browsemarks then
   browsemarks.setup({
     selected_browser = "brave"
@@ -780,11 +780,11 @@ vim.keymap.set("n", M.keymaps["key of the day"], function()
   { noremap = true })
 
 vim.keymap.set("n", "<Leader>jf", function()
-    oneoffterminaltab "c1jenkinsfzf"
+    one_off_terminal_tab "c1jenkinsfzf"
   end,
   { noremap = true })
 
-local ok, open = verifynvimplugin("open")
+local ok, open = verify_nvim_plugin("open")
 if ok and open then
   local openconfig = require("open-config")
   open.set_keymap(M.keymaps["select from finance bookmarks"], openconfig.finance)
@@ -792,7 +792,7 @@ end
 
 vim.keymap.set("n", M.keymaps["kunai delivery report"],
   function()
-    oneoffterminaltab("jiraclient -deliveryreport")
+    one_off_terminal_tab("jiraclient -deliveryreport")
   end,
   { noremap = true, silent = true }
 )

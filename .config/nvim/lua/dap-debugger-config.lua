@@ -1,4 +1,4 @@
-local ok, dap = require("willette-scripts").verifynvimplugin("dap")
+local ok, dap = require("willette-scripts").verify_nvim_plugin("dap")
 if not ok or dap == nil then return end
 
 local dapui = require("dapui")

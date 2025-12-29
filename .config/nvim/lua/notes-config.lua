@@ -1,7 +1,7 @@
 local km = require("keymappings")
 local willettescripts = require("willette-scripts")
-local verifynvimplugin = willettescripts.verifynvimplugin
-local ok, notes = verifynvimplugin("notes")
+local verify_nvim_plugin = willettescripts.verify_nvim_plugin
+local ok, notes = verify_nvim_plugin("notes")
 local home = os.getenv("HOME")
 
 if ok and notes then
@@ -43,6 +43,6 @@ vim.keymap.set("n", km.keymaps["open notes on current kunai contract"], function
 
 vim.keymap.set("n", km.keymaps["open diary entry"], function()
     local diary = require("willette-scripts.diary")
-    diary.diaryentry()
+    diary.diary_entry()
   end,
   { noremap = true })

@@ -1,9 +1,9 @@
 local M = {}
-M.setTheme = function(themeVal)
-    require('lualine').setup {
+M.set_theme = function(theme_val)
+  require('lualine').setup {
     options = {
       icons_enabled = true,
-      theme = themeVal,
+      theme = theme_val,
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
       disabled_filetypes = {
@@ -43,6 +43,6 @@ M.setTheme = function(themeVal)
     winbar = {},
     inactive_winbar = {},
     extensions = {}
-    }
+  }
 end
 return M
