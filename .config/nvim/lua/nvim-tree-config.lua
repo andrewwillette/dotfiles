@@ -1,4 +1,4 @@
-local ok, nvim_tree = require("willette-scripts").verify_nvim_plugin("nvim-tree")
+local ok, nvim_tree = require("scripts").verify_nvim_plugin("nvim-tree")
 if not ok or nvim_tree == nil then return end
 nvim_tree.setup {
   sync_root_with_cwd  = true,

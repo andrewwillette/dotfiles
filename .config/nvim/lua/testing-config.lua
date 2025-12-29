@@ -94,7 +94,7 @@ vim.keymap.set("n", km.keymaps["run last test, test last"], function()
   end,
   { noremap = true, silent = false })
 
-local verify_nvim_plugin = require("willette-scripts").verify_nvim_plugin
+local verify_nvim_plugin = require("scripts").verify_nvim_plugin
 
 if verify_nvim_plugin("plenary") then
   vim.keymap.set("n", km.keymaps["execute plenary test on file"], "<Plug>PlenaryTestFile",

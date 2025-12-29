@@ -141,10 +141,10 @@ M.keymaps = {
   ["debugger debug go test"] = "<leader>dt",
 }
 
-local willettescripts = require("willette-scripts")
-local verify_nvim_plugin = willettescripts.verify_nvim_plugin
-local one_off_terminal = willettescripts.one_off_terminal
-local one_off_terminal_tab = willettescripts.one_off_terminal_tab
+local scripts = require("scripts")
+local verify_nvim_plugin = scripts.verify_nvim_plugin
+local one_off_terminal = scripts.one_off_terminal
+local one_off_terminal_tab = scripts.one_off_terminal_tab
 
 -- Lightweight grouping modular mappings
 local function km(mode, lhs, rhs, desc, opts)
@@ -307,13 +307,13 @@ vim.keymap.set("n", M.keymaps["close tab"],
 
 vim.keymap.set("n", M.keymaps["chmod current buffer to be executable"],
   function()
-    willettescripts.chmod_0777_currentbuf()
+    scripts.chmod_0777_currentbuf()
   end,
   { noremap = true, silent = true })
 
 vim.keymap.set("n", M.keymaps["select colorscheme"],
   function()
-    require("willette-scripts.colorschemes").select_colorscheme()
+    require("scripts.colorschemes").select_colorscheme()
   end,
   {})
 
@@ -323,7 +323,7 @@ vim.keymap.set("n", M.keymaps["toggle htop"], function()
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["select and open ableton project"], function()
-    willettescripts.init_split_term("open_ableton_fiddle_project.sh")
+    scripts.init_split_term("open_ableton_fiddle_project.sh")
   end,
   { noremap = true })
 
@@ -390,12 +390,12 @@ vim.keymap.set("n", M.keymaps["go run current project"], function()
 
 vim.keymap.set("n", M.keymaps["open terminal for current project"],
   function()
-    willettescripts.terminal_git()
+    scripts.terminal_git()
   end,
   {})
 
 vim.keymap.set("n", M.keymaps["open terminal for current buffer"], function()
-    willettescripts.terminal_buffer()
+    scripts.terminal_buffer()
   end,
   { noremap = true })
 
@@ -541,7 +541,7 @@ if ok and fzflua then
           ['default'] = function(selected)
             local dir_to_open = "~/git/" .. selected[1]
             local pwd = vim.api.nvim_command_output("pwd")
-            willettescripts.init_split_term("cd " .. dir_to_open .. "; exec zsh;")
+            scripts.init_split_term("cd " .. dir_to_open .. "; exec zsh;")
             vim.cmd("cd " .. pwd)
           end
         }
@@ -670,7 +670,7 @@ vim.keymap.set("n", M.keymaps["open url under cursor"],
   "<Plug>(open-url-browser)")
 
 -- debugging keymaps
-local dap_installed, dap = require("willette-scripts").verify_nvim_plugin("dap")
+local dap_installed, dap = require("scripts").verify_nvim_plugin("dap")
 if dap_installed and dap then
   local dapgo = require("dap-go")
   require("nvim-dap-virtual-text").setup()

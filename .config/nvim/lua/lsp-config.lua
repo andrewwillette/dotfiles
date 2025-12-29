@@ -4,13 +4,13 @@ local M = require("keymappings")
 local set_normal_mode_keymap = function(lhs, rhs_func, opts)
   vim.keymap.set("n", lhs, function() rhs_func() end, opts)
 end
-local willettescripts = require("willette-scripts")
+local scripts = require("scripts")
 
 -- keymaps to be configured when attaching LSP server
 function lsp_on_attach(client, bufnr)
   set_normal_mode_keymap(M.keymaps["lsp show details on item"], vim.lsp.buf.hover, {})
   vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
-  local ok, fzflua = willettescripts.verify_nvim_plugin("fzf-lua")
+  local ok, fzflua = scripts.verify_nvim_plugin("fzf-lua")
   if ok and fzflua then
     vim.keymap.set(
       "n", "<Leader>a",

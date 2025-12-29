@@ -46,10 +46,6 @@ local plugins = {
   "nvim-lua/plenary.nvim",
   "ibhagwan/fzf-lua",
   -- { dir = "~/git/fzf-lua" },
-  "andrewwillette/willette-scripts.nvim",
-  -- { dir = "~/git/willette-scripts.nvim" },
-  { "nvim-treesitter/nvim-treesitter", lazy = false },
-  -- { dir = "~/git/willette-scripts.nvim" },
   { "nvim-treesitter/nvim-treesitter", lazy = false },
   "nvim-treesitter/nvim-treesitter-context",
   "nvim-treesitter/playground",
@@ -172,8 +168,8 @@ require("lazy").setup(plugins, {
     lazy = true,
   }
 })
-local willettescripts = require("willette-scripts")
-local verify_nvim_plugin = willettescripts.verify_nvim_plugin
+local scripts = require("scripts")
+local verify_nvim_plugin = scripts.verify_nvim_plugin
 local keymaps = require("keymappings")
 local ok, lazy = verify_nvim_plugin("lazy")
 if ok and lazy then

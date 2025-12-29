@@ -1,6 +1,6 @@
 local km = require("keymappings")
-local willettescripts = require("willette-scripts")
-local one_off_terminal = willettescripts.one_off_terminal
+local scripts = require("scripts")
+local one_off_terminal = scripts.one_off_terminal
 vim.keymap.set("n", km.keymaps["toggle git blame"], function()
     vim.cmd("G blame")
   end,
@@ -29,7 +29,7 @@ vim.keymap.set("n", km.keymaps["fugitive use right diff"], ":diffget //3<cr>",
 
 vim.keymap.set("n", km.keymaps["git log"],
   function()
-    willettescripts.init_split_term("gitl.sh")
+    scripts.init_split_term("gitl.sh")
   end,
   { noremap = true, silent = true })
 
@@ -39,7 +39,7 @@ vim.keymap.set("n", km.keymaps["git diff fugitive view"], ":Gvdiffsplit!<cr>",
 vim.keymap.set("n", km.keymaps["git status"],
   function()
     -- vim.cmd "G status"
-    willettescripts.init_split_term("gits.sh")
+    scripts.init_split_term("gits.sh")
   end,
   { noremap = true, silent = true })
 

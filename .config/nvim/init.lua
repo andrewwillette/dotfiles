@@ -68,7 +68,7 @@ require("treesitter-config")
 require("treesitterContext-config")
 require("nvim-tree-config")
 require("git-config")
-require("willette-scripts.colorschemes")
+require("scripts.colorschemes")
 require("projectnvim-config")
 require("mason-config")
 

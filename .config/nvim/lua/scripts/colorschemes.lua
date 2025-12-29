@@ -1,15 +1,16 @@
 local M = {}
 
-local verify_plugin = require("willette-scripts").verify_nvim_plugin
-local verify_vim_cmd = require("willette-scripts").verify_vim_command
+local verify_plugin = require("scripts").verify_nvim_plugin
+local verify_vim_cmd = require("scripts").verify_vim_command
 
+---@param scheme string Lualine theme name
 local function set_lualine(scheme)
   local ok, llc = verify_plugin("lualine-config")
-  if not ok or llc == nil then return end
+  if not ok then return end
   llc.set_theme(scheme)
 end
 
-local function monokai_pro()
+local function monokaipro()
   require("monokai-pro").setup({
     transparent_background = false,
     terminal_colors = true,
@@ -40,7 +41,7 @@ local function monokai_pro()
         context_start_underline = false,
       },
     },
-    override = function(c) end,
+    override = function(_) end,
   })
   vim.cmd [[colorscheme monokai-pro]]
   set_lualine("monokai-pro")
@@ -94,33 +95,9 @@ local function moonfly()
   vim.cmd [[colorscheme moonfly]]
 end
 
-local function github_light()
-  require("github-theme").setup({
-    comment_style = "NONE",
-    keyword_style = "NONE",
-    function_style = "NONE",
-    variable_style = "NONE",
-    theme_style = "light",
-    sidebars = { "qf", "vista_kind", "terminal", "packer" },
-
-    -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-    -- colors = { hint = "orange", error = "#ff0000" },
-
-    -- -- Overwrite the highlight groups
-    -- overrides = function(c)
-    --   return {
-    --     htmlTag = { fg = c.red, bg = "#282c34", sp = c.hint, style = "underline" },
-    --     DiagnosticHint = { link = "LspDiagnosticsDefaultHint" },
-    --     -- this will remove the highlight groups
-    --     TSField = {},
-    --   }
-    -- end
-  })
-end
-
 local function tundra()
   local ok, nvimtundra = verify_plugin("nvim-tundra")
-  if not ok or nvimtundra == nil then return end
+  if not ok then return end
   nvimtundra.setup({
     transparent_background = false,
     editor = {
@@ -168,7 +145,7 @@ end
 
 local function kanagawa()
   local ok, kanag = verify_plugin("kanagawa")
-  if not ok or kanag == nil then return end
+  if not ok then return end
   kanag.setup({
     compile = false,  -- enable compiling the colorscheme
     undercurl = true, -- enable undercurls
@@ -184,7 +161,7 @@ local function kanagawa()
       palette = {},
       theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
     },
-    overrides = function(colors) -- add/modify highlights
+    overrides = function(_) -- add/modify highlights
       return {}
     end,
     theme = "wave",  -- Load "wave" theme when 'background' option is not set
@@ -198,30 +175,30 @@ local function kanagawa()
   set_lualine("nightfly")
 end
 
-local function kanagawa_bones()
+local function kanagawabones()
   vim.o.background = "dark"
   vim.g.seoulbones = { italic_comments = false }
   if not verify_vim_cmd("colorscheme kanagawabones") then return end
   set_lualine("codedark")
 end
 
-local function seoulbones_dark()
+local function seoulbonesdark()
   vim.o.background = "dark"
   vim.g.seoulbones = { italic_comments = false }
   if not verify_vim_cmd("colorscheme seoulbones") then return end
   set_lualine("seoul256")
 end
 
-local function seoulbones_light()
+local function seoulboneslight()
   vim.o.background = "light"
   vim.g.seoulbones = { italic_comments = false }
   if not verify_vim_cmd("colorscheme seoulbones") then return end
   set_lualine("seoul256")
 end
 
-local function configure_catppuccin()
+local function configurecatppuccin()
   local ok, catppuccin = verify_plugin("catppuccin")
-  if not ok or catppuccin == nil then return end
+  if not ok then return end
   catppuccin.setup({
     dim_inactive = {
       enabled = false,
@@ -309,8 +286,8 @@ local function configure_catppuccin()
   return catppuccin
 end
 
-local function catpuccin_light_latte()
-  configure_catppuccin()
+local function catpuccinlightlatte()
+  configurecatppuccin()
   vim.g.catppuccin_flavour = "latte"
   if not verify_vim_cmd("colorscheme catppuccin") then
     return
@@ -318,28 +295,28 @@ local function catpuccin_light_latte()
   set_lualine("onelight")
 end
 
-local function catpuccin_dark_frappe()
-  configure_catppuccin()
+local function catpuccindarkfrappe()
+  configurecatppuccin()
   vim.g.catppuccin_flavour = "frappe"
   if not verify_vim_cmd("colorscheme catppuccin") then return end
   set_lualine("horizon")
 end
 
-local function catpuccin_dark_macchiato()
-  configure_catppuccin()
+local function catpuccindarkmacchiato()
+  configurecatppuccin()
   vim.g.catppuccin_flavour = "macchiato"
   if not verify_vim_cmd("colorscheme catppuccin") then return end
   set_lualine("horizon")
 end
 
-local function catpuccin_dark_mocha()
-  configure_catppuccin()
+local function catpuccindarkmocha()
+  configurecatppuccin()
   vim.g.catppuccin_flavour = "mocha"
   if not verify_vim_cmd("colorscheme catppuccin") then return end
   set_lualine("horizon")
 end
 
-local function green_is_good()
+local function greenisgood()
   vim.o.background = "dark"
   if not verify_vim_cmd("colorscheme greenisgood") then return end
   set_lualine("codedark")
@@ -351,7 +328,7 @@ local function monochrome()
   set_lualine("codedark")
 end
 
-local gruvbox_material = function()
+local gruvboxmaterial = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   vim.g.gruvbox_material_disable_italic_comment = 0
@@ -359,7 +336,7 @@ local gruvbox_material = function()
   set_lualine("gruvbox_dark")
 end
 
-local gruvbox_light = function()
+local gruvboxlight = function()
   vim.o.background = "light"
   require("gruvbox").setup({
     undercurl = false,
@@ -382,7 +359,7 @@ local gruvbox_light = function()
   set_lualine("gruvbox_light")
 end
 
-local gruvbox_dark = function()
+local gruvboxdark = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   vim.g.gruvbox_italics = 0
@@ -414,9 +391,9 @@ local gruvbox_dark = function()
 end
 
 local function rosepine(bg)
-  ok, rosepine = verify_plugin("rose-pine")
-  if not ok or rosepine == nil then return end
-  rosepine.setup({
+  local ok, rosepineplugin = verify_plugin("rose-pine")
+  if not ok then return end
+  rosepineplugin.setup({
     --- @usage 'main' | 'moon'
     dark_variant = 'moon',
     bold_vert_split = false,
@@ -460,31 +437,31 @@ local function rosepine(bg)
   vim.cmd("colorscheme rose-pine")
 end
 
-local rosepine_light = function()
+local rosepinelight = function()
   rosepine "light"
   set_lualine("ayu_light")
 end
 
-local rosepine_dark = function()
+local rosepinedark = function()
   rosepine "dark"
   set_lualine("ayu_dark")
 end
 
-local duskfox_dark = function()
+local duskfoxdark = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   if not verify_vim_cmd("colorscheme duskfox") then return end
   set_lualine("palenight")
 end
 
-local nightfox_dark = function()
+local nightfoxdark = function()
   vim.opt.termguicolors = true
   vim.o.background = "dark"
   vim.cmd("colorscheme nightfox")
   set_lualine("palenight")
 end
 
-local dayfox_light = function()
+local dayfoxlight = function()
   vim.opt.termguicolors = true
   vim.o.background = "light"
   if not verify_vim_cmd("colorscheme dayfox") then return end
@@ -497,77 +474,34 @@ local everforest = function()
 end
 
 local colorscheme_table = {
-  ["gruvbox dark"] = gruvbox_dark,
-  ["gruvbox light"] = gruvbox_light,
-  ["gruvbox material"] = gruvbox_material,
-  ["rosepine light"] = rosepine_light,
-  ["rosepine dark"] = rosepine_dark,
-  ["duskfox dark"] = duskfox_dark,
-  ["dayfox light"] = dayfox_light,
-  ["nightfox dark"] = nightfox_dark,
-  ["greenisgood dark"] = green_is_good,
+  ["gruvbox dark"] = gruvboxdark,
+  ["gruvbox light"] = gruvboxlight,
+  ["gruvbox material"] = gruvboxmaterial,
+  ["rosepine light"] = rosepinelight,
+  ["rosepine dark"] = rosepinedark,
+  ["duskfox dark"] = duskfoxdark,
+  ["dayfox light"] = dayfoxlight,
+  ["nightfox dark"] = nightfoxdark,
+  ["greenisgood dark"] = greenisgood,
   ["monochrome dark"] = monochrome,
-  ["seoulbones dark"] = seoulbones_dark,
-  ["seoulbones light"] = seoulbones_light,
-  ["catppuncin light latte"] = catpuccin_light_latte,
-  ["catppuncin dark mocha"] = catpuccin_dark_mocha,
-  ["catppuncin dark frappe"] = catpuccin_dark_frappe,
-  ["catppuncin dark macchiato"] = catpuccin_dark_macchiato,
-  ["kanagawabones"] = kanagawa_bones,
+  ["seoulbones dark"] = seoulbonesdark,
+  ["seoulbones light"] = seoulboneslight,
+  ["catppuncin light latte"] = catpuccinlightlatte,
+  ["catppuncin dark mocha"] = catpuccindarkmocha,
+  ["catppuncin dark frappe"] = catpuccindarkfrappe,
+  ["catppuncin dark macchiato"] = catpuccindarkmacchiato,
+  ["kanagawabones"] = kanagawabones,
   ["kanagawa"] = kanagawa,
   ["tundra"] = tundra,
   ["moonfly"] = moonfly,
   ["onedark"] = onedark,
-  ["monokaipro"] = monokai_pro,
+  ["monokaipro"] = monokaipro,
   ["everforest"] = everforest,
-  ["github_light"] = github_light,
 }
 
 local colorscheme_select = {}
 for k, _ in pairs(colorscheme_table) do
   table.insert(colorscheme_select, k)
-end
-
-local function search_and_replace(filename, search_string, replacement)
-  -- Read the file lines
-  local file = io.open(filename, "r")
-  if not file then
-    print("Cannot open file: " .. filename)
-    return
-  end
-
-  local lines = {}
-  for line in file:lines() do
-    table.insert(lines, line)
-  end
-  file:close()
-
-  -- Find the line matching the search_string and replace the next line
-  for i, line in ipairs(lines) do
-    if line:find(search_string) then
-      if i < #lines then
-        lines[i + 1] = replacement
-      end
-      break
-    end
-  end
-
-  -- Write the modified lines to a temporary file
-  local tmp_filename = filename .. ".tmp"
-  file = io.open(tmp_filename, "w")
-  if not file then
-    print("Cannot write to temporary file: " .. tmp_filename)
-    return
-  end
-
-  for _, line in ipairs(lines) do
-    file:write(line .. "\n")
-  end
-  file:close()
-
-  -- Replace the original file with the temporary file
-  os.remove(filename)               -- Delete the original file
-  os.rename(tmp_filename, filename) -- Rename the temporary file
 end
 
 M.select_colorscheme = function()
@@ -580,5 +514,5 @@ M.select_colorscheme = function()
   })
 end
 
-gruvbox_dark()
+gruvboxdark()
 return M

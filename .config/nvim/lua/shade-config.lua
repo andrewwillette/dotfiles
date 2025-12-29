@@ -1,4 +1,4 @@
-local ok, shade = require "willette-scripts".verify_nvim_plugin "shade"
+local ok, shade = require "scripts".verify_nvim_plugin "shade"
 if not ok or shade == nil then
   return
 end

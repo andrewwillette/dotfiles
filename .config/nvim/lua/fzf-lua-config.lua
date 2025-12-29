@@ -1,5 +1,5 @@
-local willettescripts = require("willette-scripts")
-local ok, fzflua = willettescripts.verify_nvim_plugin("fzf-lua")
+local scripts = require("scripts")
+local ok, fzflua = scripts.verify_nvim_plugin("fzf-lua")
 
 if not ok then
   return

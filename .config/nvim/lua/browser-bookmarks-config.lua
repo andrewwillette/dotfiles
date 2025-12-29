@@ -1,5 +1,5 @@
-local willette_scripts = require("willette-scripts")
-local verify_nvim_plugin = willette_scripts.verify_nvim_plugin
+local scripts = require("scripts")
+local verify_nvim_plugin = scripts.verify_nvim_plugin
 
 local ok, bb = verify_nvim_plugin("browser_bookmarks")
 if not ok or bb == nil then
