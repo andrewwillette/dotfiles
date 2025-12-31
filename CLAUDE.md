@@ -35,3 +35,13 @@ The Neovim config uses a modular Lua structure in `.config/nvim/lua/`:
 - Individual plugin configs follow the pattern `{plugin}-config.lua`
 
 Key plugins: GitHub Copilot, fzf-lua, neotest, DAP debugger, treesitter, Mason (LSP manager).
+
+## Testing
+
+After making changes to Neovim configuration, run:
+
+```bash
+./scripts/test-nvim-startup.sh
+```
+
+This verifies Neovim starts without errors in headless mode.
