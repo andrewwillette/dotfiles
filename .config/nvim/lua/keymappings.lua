@@ -156,9 +156,9 @@ end
 local function setup_general()
   -- should use "open keymap file" key from map
   km("n", M.keymaps["open Jira client"], function() one_off_terminal("jiraclient") end, "Open Jira client")
-  km("n", M.keymaps["clear search highlight"], function() vim.cmd("nohlsearch") end, "Clear search highlight")
-  km("n", M.keymaps["show current file path"], function() vim.cmd("echo expand('%:p')") end, "Show current file path")
-  km("n", M.keymaps["open keymap file"], function() vim.cmd("e ~/git/dotfiles/.config/nvim/lua/keymappings.lua") end,
+  km("n", M.keymaps["clear search highlight"], function() vim.cmd.nohlsearch() end, "Clear search highlight")
+  km("n", M.keymaps["show current file path"], function() print(vim.fn.expand('%:p')) end, "Show current file path")
+  km("n", M.keymaps["open keymap file"], function() vim.cmd.edit("~/git/dotfiles/.config/nvim/lua/keymappings.lua") end,
     "Edit keymappings.lua")
 end
 
@@ -178,19 +178,19 @@ vim.keymap.set("n", M.keymaps["toggle word wrapping"], function()
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["split window horizontally"], function()
-    vim.cmd('split')
+    vim.cmd.split()
   end,
   { noremap = true })
 vim.keymap.set("n", M.keymaps["split window vertically"], function()
-    vim.cmd('vsplit')
+    vim.cmd.vsplit()
   end,
   { noremap = true })
 vim.keymap.set("n", M.keymaps["open only current window"], function()
-    vim.cmd('only')
+    vim.cmd.only()
   end,
   { noremap = true })
 vim.keymap.set("n", M.keymaps["close current buffer"], function()
-    vim.cmd('close')
+    vim.cmd.close()
   end,
   { noremap = true })
 
@@ -208,13 +208,13 @@ vim.keymap.set("n", M.keymaps["save current buffer"], function()
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["open new tab"], function()
-    vim.cmd("tabnew")
+    vim.cmd.tabnew()
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["open terminal in current buffer"], function()
-    vim.cmd("terminal")
-    vim.cmd("startinsert")
+    vim.cmd.terminal()
+    vim.cmd.startinsert()
   end,
   { noremap = true })
 
@@ -260,13 +260,13 @@ vim.keymap.set("t", "<c-h>", "<C-\\><C-N>",
 
 vim.keymap.set({ "n", "t" }, M.keymaps["delete current buffer"], function()
     vim.cmd("call feedkeys(\"<C-\\><C-N>\")")
-    vim.cmd(":bdelete!")
+    vim.cmd.bdelete({ bang = true })
   end,
   { noremap = true })
 
 
 vim.keymap.set("n", M.keymaps["close help pane"], function()
-    vim.cmd(":helpclose")
+    vim.cmd.helpclose()
   end,
   { noremap = true })
 
@@ -301,7 +301,7 @@ vim.keymap.set("n", M.keymaps["copy vim messages buffer"], function()
 
 vim.keymap.set("n", M.keymaps["close tab"],
   function()
-    vim.cmd("tabclose")
+    vim.cmd.tabclose()
   end,
   { noremap = true, silent = true })
 
@@ -352,8 +352,8 @@ vim.keymap.set("n", M.keymaps["make jira document"], function()
       end
       local new_file = "~/git/manual/employment/kunai/tasks_todo/" .. filename
       vim.cmd("!touch " .. new_file)
-      vim.cmd("e " .. new_file)
-      vim.cmd("w")
+      vim.cmd.edit(vim.fn.fnameescape(new_file))
+      vim.cmd.write()
     end)
   end,
   { noremap = true })
@@ -364,7 +364,7 @@ vim.keymap.set("n", M.keymaps["mark jira document as done"], function()
     local filename = vim.fn.expand('%:t')
     local done_filepath = "./jira/done/" .. filename
     os.rename(filepath, done_filepath)
-    vim.cmd("e " .. done_filepath)
+    vim.cmd.edit(vim.fn.fnameescape(done_filepath))
   end,
   { noremap = true })
 
@@ -372,8 +372,8 @@ vim.keymap.set("n", M.keymaps["make meeting document"], function()
     vim.ui.input({ prompt = "New Meeting Name: " }, function(input)
       local date = os.date("%Y-%m-%d")
       local new_file = "~/git/manual/employment/kunai/tasks_todo/" .. date .. "-" .. input .. ".md"
-      vim.cmd("e " .. new_file)
-      vim.cmd("w")
+      vim.cmd.edit(vim.fn.fnameescape(new_file))
+      vim.cmd.write()
     end)
   end,
   { noremap = true })
@@ -474,10 +474,10 @@ if ok and fzflua then
         actions = {
           ['default'] = function(selected)
             local dir_to_open = "~/git/" .. selected[1]
-            local pwd = vim.api.nvim_command_output("pwd")
-            vim.cmd("cd " .. dir_to_open)
+            local pwd = vim.fn.getcwd()
+            vim.cmd.cd(dir_to_open)
             vim.cmd("silent !gho")
-            vim.cmd("cd " .. pwd)
+            vim.cmd.cd(pwd)
           end
         }
       })
@@ -528,7 +528,7 @@ if ok and fzflua then
         actions = {
           ['default'] = function(selected)
             local file_to_open = transcripts_dir .. "/" .. selected[1]
-            vim.cmd("e " .. file_to_open)
+            vim.cmd.edit(vim.fn.fnameescape(file_to_open))
           end
         }
       })
@@ -540,9 +540,9 @@ if ok and fzflua then
         actions = {
           ['default'] = function(selected)
             local dir_to_open = "~/git/" .. selected[1]
-            local pwd = vim.api.nvim_command_output("pwd")
+            local pwd = vim.fn.getcwd()
             scripts.init_split_term("cd " .. dir_to_open .. "; exec zsh;")
-            vim.cmd("cd " .. pwd)
+            vim.cmd.cd(pwd)
           end
         }
       })
@@ -603,7 +603,7 @@ local ok, gitsigns = verify_nvim_plugin("gitsigns")
 if ok and gitsigns then
   vim.keymap.set("n", M.keymaps["toggle gitsigns plugin"],
     function()
-      vim.cmd("Gitsigns toggle_signs")
+      gitsigns.toggle_signs()
     end,
     { noremap = true, silent = true })
 end
@@ -630,10 +630,10 @@ if ok and ls then
 end
 
 vim.keymap.set("n", M.keymaps["make session"], function()
-  vim.cmd "mksession! ~/tmp/Session.vim"
+  vim.cmd.mksession({ args = { "~/tmp/Session.vim" }, bang = true })
 end, { silent = true })
 vim.keymap.set("n", M.keymaps["open session"], function()
-  vim.cmd "source ~/tmp/Session.vim"
+  vim.cmd.source("~/tmp/Session.vim")
 end, { silent = true })
 
 vim.keymap.set("n", M.keymaps["source my zshrc"], function()
@@ -642,26 +642,26 @@ end, { silent = true })
 
 -- buffer next / previous
 vim.keymap.set("n", M.keymaps["buffer next"], function()
-  vim.cmd "bn"
+  vim.cmd.bnext()
 end, { silent = true })
 
 -- quickfix list keybinds
 vim.keymap.set("n", M.keymaps["open quickfix list"], function()
-  vim.cmd "copen"
+  vim.cmd.copen()
 end, { silent = true })
 vim.keymap.set("n", M.keymaps["close quickfix list"], function()
-  vim.cmd "cclose"
+  vim.cmd.cclose()
 end, { silent = true })
 vim.keymap.set("n", M.keymaps["quickfix next"], function()
-  vim.cmd "cnext"
+  vim.cmd.cnext()
 end, { silent = true })
 vim.keymap.set("n", M.keymaps["quickfix previous"], function()
-  vim.cmd "cprevious"
+  vim.cmd.cprevious()
 end, { silent = true })
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function get_word_under_cursor()
-  local word = vim.call('expand', '<cWORD>')
+  local word = vim.fn.expand('<cWORD>')
   print(word)
   return word
 end
@@ -730,13 +730,13 @@ set_normal_mode_keymap("<leader>ggl", function()
 end, {})
 
 local function get_current_buffer_absolute_path()
-  return vim.call('expand', '%:p')
+  return vim.fn.expand('%:p')
 end
 
 -- leetcode test - add test to leetcode testing file
 vim.keymap.set("n", M.keymaps["create leetcode test"], function()
   current_buffer = get_current_buffer_absolute_path()
-  vim.api.nvim_exec("!creategotest " .. current_buffer, false)
+  vim.cmd("!creategotest " .. current_buffer)
 end, { silent = true })
 
 local ok, browserbookmarks = verify_nvim_plugin("browser_bookmarks")
