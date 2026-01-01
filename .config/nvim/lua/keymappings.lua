@@ -2,7 +2,6 @@
 local M = {}
 
 M.keymaps = {
-  ["open keymap file"] = "<leader>km",
   ["open Jira client"] = "<Leader>jc",
   ["clear search highlight"] = "<Leader>/",
   ["show current file path"] = "<leader>cb",
@@ -117,7 +116,7 @@ M.keymaps = {
   ["open new AI prompt window"] = "<leader>gpn",
   ["pick from previous AI prompt chats"] = "<leader>gpp",
   ["take highlighted text into AI prompt"] = "<leader>gpp",
-
+  ["select keymap configuration"] = "<leader>km",
   ["lsp show details on item"] = "K",
   ["lsp go to definition"] = "gd",
   ["lsp get references"] = "gr",
@@ -154,12 +153,9 @@ local function km(mode, lhs, rhs, desc, opts)
 end
 
 local function setup_general()
-  -- should use "open keymap file" key from map
   km("n", M.keymaps["open Jira client"], function() one_off_terminal("jiraclient") end, "Open Jira client")
   km("n", M.keymaps["clear search highlight"], function() vim.cmd.nohlsearch() end, "Clear search highlight")
   km("n", M.keymaps["show current file path"], function() print(vim.fn.expand('%:p')) end, "Show current file path")
-  km("n", M.keymaps["open keymap file"], function() vim.cmd.edit("~/git/dotfiles/.config/nvim/lua/keymappings.lua") end,
-    "Edit keymappings.lua")
 end
 
 setup_general()
@@ -597,6 +593,30 @@ if ok and fzflua then
       fzflua.buffers({})
     end,
     { noremap = true, silent = true })
+
+  -- select keymap and jump to its configuration
+  vim.keymap.set("n", M.keymaps["select keymap configuration"], function()
+    local keymaps_list = {}
+    for desc, key in pairs(M.keymaps) do
+      table.insert(keymaps_list, key .. " :: " .. desc)
+    end
+    table.sort(keymaps_list)
+    fzflua.fzf_exec(keymaps_list, {
+      previewer = false,
+      actions = {
+        ['default'] = function(selected)
+          local desc = selected[1]:match(":: (.+)$")
+          local pattern = 'M.keymaps\\["' .. desc .. '"\\]'
+          local ok, _ = pcall(vim.cmd, 'vimgrep /' .. pattern .. '/j ~/git/dotfiles/.config/nvim/lua/**/*.lua')
+          if ok then
+            vim.cmd('cfirst')
+          else
+            vim.notify("No match found for: " .. desc, vim.log.levels.WARN)
+          end
+        end
+      }
+    })
+  end, { noremap = true, silent = true })
 end
 
 local ok, gitsigns = verify_nvim_plugin("gitsigns")
