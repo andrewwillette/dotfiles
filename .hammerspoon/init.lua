@@ -57,5 +57,8 @@ local function openabletonexercise()
 end
 
 hotkey.bind({ "cmd", "ctrl" }, "e", openabletonexercise)
+hotkey.bind({ "cmd", "ctrl" }, "t", function()
+  hs.execute("open 'x-apple.systempreferences:com.apple.Screen-Time-Settings.extension'")
+end)
 
 hs.alert.show("Hammerspoon Config Loaded")

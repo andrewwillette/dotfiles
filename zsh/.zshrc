@@ -98,7 +98,7 @@ run_converter() {
 export GOPATH=$HOME/gocode
 [ -d "$GOPATH/bin" ] && export GOBIN=$GOPATH/bin
 [ -d "$GOPATH/cache" ] && export GOCACHE=$HOME/gocode/cache
-mkdir -p $GOBIN
+[ -n "$GOBIN" ] && mkdir -p $GOBIN
 [ -d "$HOME/gocode/bin" ] && export PATH="$PATH:$GOPATH/bin"
 
 # configure for the PURE prompt in zshrc
@@ -165,13 +165,13 @@ export FZF_CTRL_T_COMMAND='fd --hidden --follow --exclude .git'
 # gruvbox
 export FZF_DEFAULT_OPTS='--color=bg+:#3c3836,bg:#32302f,spinner:#fb4934,hl:#928374,fg:#ebdbb2,header:#928374,info:#8ec07c,pointer:#fb4934,marker:#fb4934,fg+:#ebdbb2,prompt:#fb4934,hl+:#fb4934'
 # Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
+command -v fzf >/dev/null && source <(fzf --zsh)
 
 # neovim development
 # alias luamake=~/.config/nvim/lua-language-server/3rd/luamake/luamake
 export ASAN_OPTIONS="detect_leaks=1:check_initialization_order=1:log_path=/Users/andrewwillette/tmp/asan"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+[ -d "$HOME/.yarn/bin" ] && export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 [ -f /usr/local/cof/bin/cofproxy ] && source /usr/local/cof/bin/cofproxy &>/dev/null
 
@@ -223,7 +223,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
+[ -x /usr/local/bin/terraform ] && complete -o nospace -C /usr/local/bin/terraform terraform
 
 [[ -s "$HOME/.c1shell" ]] && source "$HOME/.c1shell"
 
@@ -266,9 +266,9 @@ export SERVER_LOG_USER="ubuntu"
 export SERVER_LOG_LOG_LOCATION="/home/ubuntu/server.log"
 
 # GoLang
-export PATH=$GOROOT/bin:$PATH
+[ -n "$GOROOT" ] && [ -d "$GOROOT/bin" ] && export PATH=$GOROOT/bin:$PATH
 export GOPATH=$HOME/gocode
-export PATH=$GOPATH/bin:$PATH
+[ -d "$GOPATH/bin" ] && export PATH=$GOPATH/bin:$PATH
 export GOPROXY="direct"
 
 export PLUTUS_AMEX_DIR="$HOME/Documents/plutus/amex"
@@ -276,5 +276,3 @@ export PLUTUS_CAPONE_DIR="$HOME/Documents/plutus/capone"
 
 export ANDREWWILLETTE_PUBLIC_IP="18.217.244.34"
 export ANDREWWILLETTE_PODMAN_PUBLIC_IP="18.221.200.131"
-
-export PATH=$HOME/.local/bin:$PATH
