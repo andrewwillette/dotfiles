@@ -2,7 +2,8 @@
 local M = {}
 
 M.keymaps = {
-  ["open Jira client"] = "<Leader>jc",
+  ["view incomplete jira issues"] = "<Leader>ji",
+  ["create jira story"] = "<Leader>jic",
   ["clear search highlight"] = "<Leader>/",
   ["show current file path"] = "<leader>cb",
   ["no-op leader"] = "<leader>",
@@ -153,7 +154,10 @@ local function km(mode, lhs, rhs, desc, opts)
 end
 
 local function setup_general()
-  km("n", M.keymaps["open Jira client"], function() one_off_terminal("jiraclient") end, "Open Jira client")
+  km("n", M.keymaps["view incomplete jira issues"], function() one_off_terminal("jira_open_incomplete_issues.sh") end,
+    "view incomplete jiras")
+  km("n", M.keymaps["create jira story"], function() one_off_terminal("jira_create_issue.sh") end,
+    "view incomplete jiras")
   km("n", M.keymaps["clear search highlight"], function() vim.cmd.nohlsearch() end, "Clear search highlight")
   km("n", M.keymaps["show current file path"], function() print(vim.fn.expand('%:p')) end, "Show current file path")
 end

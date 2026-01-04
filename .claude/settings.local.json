@@ -4,7 +4,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(mkdir:*)",
-      "Bash(./scripts/test-nvim-startup.sh:*)"
+      "Bash(./scripts/test-nvim-startup.sh:*)",
+      "Bash(go build:*)",
+      "Bash(go vet:*)"
     ]
   }
 }
