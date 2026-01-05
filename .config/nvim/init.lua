@@ -70,10 +70,7 @@ require("nvim-tree-config")
 require("git-config")
 require("scripts.colorschemes")
 require("projectnvim-config")
-require("mason-config")
-
 require("lsp-config")
-
 require("dap-debugger-config")
 -- require("nvim-cmp-config")
 require("luasnip-config")

@@ -20,7 +20,6 @@ local plugins = {
   "andrewwillette/open.nvim",
   "andrewwillette/keyofday.nvim",
   "andrewwillette/projectnotes.nvim",
-  "williamboman/mason.nvim",
   -- "neovim/nvim-lspconfig",
   "hrsh7th/cmp-nvim-lsp",
   -- colorschemes

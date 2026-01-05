@@ -118,6 +118,7 @@ M.keymaps = {
   ["pick from previous AI prompt chats"] = "<leader>gpp",
   ["take highlighted text into AI prompt"] = "<leader>gpp",
   ["select keymap configuration"] = "<leader>km",
+  ["restart lsps"] = "<leader>lr",
   ["lsp show details on item"] = "K",
   ["lsp go to definition"] = "gd",
   ["lsp get references"] = "gr",

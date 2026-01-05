@@ -141,4 +141,14 @@ vim.lsp.config.clangd = {
   cmd = { "clangd" },
 }
 
+function restartLSP()
+  for _, client in ipairs(vim.lsp.get_active_clients()) do
+    vim.lsp.stop_client(client.id)
+  end
+  vim.cmd('edit') -- Reloads the current buffer to start the client
+end
+
+-- restartLSP()
+set_normal_mode_keymap(M.keymaps["restart lsps"], restartLSP, {})
+
 vim.lsp.enable({ "gopls", "luals", "bashls", "rust_analyzer", "clangd" })
