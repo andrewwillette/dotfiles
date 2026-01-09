@@ -3,6 +3,7 @@
 set -eu
 
 DOTFILES_DIR="$HOME/git/dotfiles"
+DOTFILES_PRIVATE_DIR="$HOME/git/dotfiles_private"
 CONFIG_DIR="$HOME/.config"
 timestamp="$(date +%s)"
 
@@ -24,6 +25,10 @@ link_file() {
 
 link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/.hammerspoon" "$HOME/.hammerspoon"
+
+if [ -d "$DOTFILES_PRIVATE_DIR" ]; then
+  link_file "$DOTFILES_PRIVATE_DIR/.zshenv" "$HOME/.zshenv"
+fi
 
 mkdir -p "$CONFIG_DIR"
 

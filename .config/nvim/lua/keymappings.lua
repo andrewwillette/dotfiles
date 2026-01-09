@@ -109,6 +109,7 @@ M.keymaps = {
   ["open url under cursor"] = "gx",
   ["select from finance bookmarks"] = "<leader>of",
   ["kunai delivery report"] = "<Leader>dr",
+  ["view securities"] = "<Leader>st",
   ["key of the day"] = "<Leader>kod",
   ["add browser bookmark"] = "<Leader>bmm",
   ["select browser bookmark"] = "<Leader>bm",
@@ -804,6 +805,12 @@ end
 vim.keymap.set("n", M.keymaps["kunai delivery report"],
   function()
     one_off_terminal_tab("jiraclient -deliveryreport")
+  end,
+  { noremap = true, silent = true }
+)
+vim.keymap.set("n", M.keymaps["view securities"],
+  function()
+    one_off_terminal("tradingbot view-securities|less")
   end,
   { noremap = true, silent = true }
 )
