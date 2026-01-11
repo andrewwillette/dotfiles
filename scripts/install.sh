@@ -28,6 +28,9 @@ link_file "$DOTFILES_DIR/.hammerspoon" "$HOME/.hammerspoon"
 
 if [ -d "$DOTFILES_PRIVATE_DIR" ]; then
   link_file "$DOTFILES_PRIVATE_DIR/.zshenv" "$HOME/.zshenv"
+  mkdir -p "$HOME/.claude"
+  link_file "$DOTFILES_PRIVATE_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+  link_file "$DOTFILES_PRIVATE_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 fi
 
 mkdir -p "$CONFIG_DIR"

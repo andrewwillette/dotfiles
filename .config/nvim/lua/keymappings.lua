@@ -130,6 +130,11 @@ M.keymaps = {
   ["lsp diagnostic go to previous"] = "<leader>ds",
   ["lsp diagnostic go to next"] = "<leader>df",
 
+  ["send selection to claude"] = "<leader>cl",
+  ["send selection to claude with prompt"] = "<leader>cp",
+  ["open claude terminal"] = "<leader>ct",
+  ["mark terminal as claude"] = "<leader>cM",
+
   ["debugger step over"] = "<F1>",
   ["debugger step into"] = "<F2>",
   ["debugger step out"] = "<F3>",
@@ -600,8 +605,13 @@ if ok and fzflua then
     end,
     { noremap = true, silent = true })
 
-  -- select keymap and jump to its configuration
-  vim.keymap.set("n", M.keymaps["select keymap configuration"], function()
+  -- select keymap and execute or jump to its configuration
+  local function keymap_selector()
+    local choice = vim.fn.input("(e)xecute keymap or (g)o to definition? (e/g): ")
+    if choice ~= "e" and choice ~= "g" then
+      return
+    end
+
     local keymaps_list = {}
     for desc, key in pairs(M.keymaps) do
       table.insert(keymaps_list, key .. " :: " .. desc)
@@ -611,18 +621,26 @@ if ok and fzflua then
       previewer = false,
       actions = {
         ['default'] = function(selected)
+          local key = selected[1]:match("^(.-)%s*::")
           local desc = selected[1]:match(":: (.+)$")
-          local pattern = 'M.keymaps\\["' .. desc .. '"\\]'
-          local ok, _ = pcall(vim.cmd, 'vimgrep /' .. pattern .. '/j ~/git/dotfiles/.config/nvim/lua/**/*.lua')
-          if ok then
-            vim.cmd('cfirst')
+          if choice == "e" then
+            local keys = vim.api.nvim_replace_termcodes(key, true, false, true)
+            vim.api.nvim_feedkeys(keys, "m", false)
           else
-            vim.notify("No match found for: " .. desc, vim.log.levels.WARN)
+            local pattern = 'M.keymaps\\["' .. desc .. '"\\]'
+            local ok, _ = pcall(vim.cmd, 'vimgrep /' .. pattern .. '/j ~/git/dotfiles/.config/nvim/lua/**/*.lua')
+            if ok then
+              vim.cmd('cfirst')
+            else
+              vim.notify("No match found for: " .. desc, vim.log.levels.WARN)
+            end
           end
         end
       }
     })
-  end, { noremap = true, silent = true })
+  end
+  vim.keymap.set({ "n", "v" }, M.keymaps["select keymap configuration"], keymap_selector,
+    { noremap = true, silent = true })
 end
 
 local ok, gitsigns = verify_nvim_plugin("gitsigns")
@@ -814,5 +832,23 @@ vim.keymap.set("n", M.keymaps["view securities"],
   end,
   { noremap = true, silent = true }
 )
+
+-- claude terminal integration
+local claude = require("scripts.claude")
+vim.keymap.set("v", M.keymaps["send selection to claude"], function()
+  claude.send_selection_to_claude()
+end, { noremap = true, silent = true, desc = "Send selection to claude terminal" })
+
+vim.keymap.set("v", M.keymaps["send selection to claude with prompt"], function()
+  claude.send_selection_with_input()
+end, { noremap = true, silent = true, desc = "Send selection to claude with prompt" })
+
+vim.keymap.set("n", M.keymaps["open claude terminal"], function()
+  claude.open_claude_terminal()
+end, { noremap = true, silent = true, desc = "Open claude in new tab" })
+
+vim.keymap.set("n", M.keymaps["mark terminal as claude"], function()
+  claude.mark_as_claude()
+end, { noremap = true, silent = true, desc = "Mark current terminal as claude" })
 
 return M
