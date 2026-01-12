@@ -273,6 +273,3 @@ export GOPROXY="direct"
 
 export PLUTUS_AMEX_DIR="$HOME/Documents/plutus/amex"
 export PLUTUS_CAPONE_DIR="$HOME/Documents/plutus/capone"
-
-export ANDREWWILLETTE_PUBLIC_IP="18.217.244.34"
-export ANDREWWILLETTE_PODMAN_PUBLIC_IP="18.221.200.131"
