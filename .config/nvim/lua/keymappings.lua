@@ -147,7 +147,7 @@ end
 
 local function setup_general()
   km("n", M.keymaps["clear search highlight"], function() vim.cmd.nohlsearch() end, "Clear search highlight")
-  km("n", M.keymaps["show current file path"], function() print(vim.fn.expand('%:p')) end, "Show current file path")
+  km("n", M.keymaps["show current file path"], function() vim.notify(vim.fn.expand('%:p'), vim.log.levels.INFO) end, "Show current file path")
 end
 
 setup_general()
@@ -444,7 +444,7 @@ if ok and fzflua then
     if choice == "u" then
       local youtube_url = vim.fn.input("YouTube URL: ")
       if youtube_url == "" then
-        print("You must provide a YouTube URL")
+        vim.notify("You must provide a YouTube URL", vim.log.levels.WARN)
         return
       end
 
@@ -458,14 +458,14 @@ if ok and fzflua then
       -- Run and capture stdout (should be just the file path)
       local out = vim.fn.system(cmd)
       if vim.v.shell_error ~= 0 then
-        print("Error running cleansrt command")
+        vim.notify("Error running cleansrt command", vim.log.levels.ERROR)
         return
       end
 
       -- Trim trailing whitespace/newlines
       local path = out:gsub("%s+$", "")
       if path == "" then
-        print("cleansrt returned an empty path")
+        vim.notify("cleansrt returned an empty path", vim.log.levels.ERROR)
         return
       end
 

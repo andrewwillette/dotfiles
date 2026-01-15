@@ -15,7 +15,7 @@ vim.keymap.set("n", km.keymaps["git diff view"],
 vim.keymap.set("n", km.keymaps["git diff current buffer"],
   function()
     local current_file = vim.fn.expand('%')
-    print(current_file)
+    vim.notify(current_file, vim.log.levels.INFO)
     one_off_terminal("gitdh.sh " .. current_file)
   end,
   { noremap = true, silent = true })
@@ -56,10 +56,12 @@ vim.keymap.set("n", km.keymaps["delete git branch picker"], function()
 
 -- git commit all
 vim.keymap.set("n", km.keymaps["git commit"], function()
-  vim.ui.input({ prompt = "Commit Messsage: " }, function(input)
-    vim.cmd("!git add --all")
-    vim.cmd("!git commit -m \"" .. input .. "\"")
-    vim.cmd("!git push -u origin HEAD")
+  vim.ui.input({ prompt = "Commit Message: " }, function(input)
+    if input == nil then return end
+    vim.fn.system("git add --all")
+    vim.fn.system('git commit -m "' .. input .. '"')
+    vim.fn.system("git push -u origin HEAD")
+    vim.notify("Committed and pushed: " .. input, vim.log.levels.INFO)
   end)
 end, { noremap = true })
 
