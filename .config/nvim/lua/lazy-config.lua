@@ -104,16 +104,6 @@ local plugins = {
   "hashivim/vim-terraform",
   "lewis6991/gitsigns.nvim",
   "rust-lang/rust.vim",
-  {
-    "zbirenbaum/copilot.lua",
-    --     dir = "/Users/andrewwillette/git/copilot.lua",
-  },
-  {
-    -- "zbirenbaum/copilot-cmp",
-    -- because of unresolved deprecations, using fork
-    "andrewwillette/copilot-cmp"
-    -- dir = "/Users/andrewwillette/git/copilot-cmp",
-  },
   'MeanderingProgrammer/render-markdown.nvim',
   "andrewwillette/health_check_nvim",
   {

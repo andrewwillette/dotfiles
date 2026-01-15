@@ -2,8 +2,6 @@
 local M = {}
 
 M.keymaps = {
-  ["view incomplete jira issues"] = "<Leader>ji",
-  ["create jira story"] = "<Leader>jic",
   ["clear search highlight"] = "<Leader>/",
   ["show current file path"] = "<leader>cb",
   ["no-op leader"] = "<leader>",
@@ -16,11 +14,8 @@ M.keymaps = {
   ["close current buffer"] = "<leader>wc",
   ["move current buffer to new tab"] = "<leader>wt",
   ["save current buffer"] = "<leader>s",
-  ["open Orion notes"] = "<Leader>or",
   ["open diary entry"] = "<Leader>di",
-  ["open weekly note"] = "<Leader>wk",
   ["start docker"] = "<Leader>do",
-  ["jira browser"] = "<Leader>ig",
   ["test nearest"] = "<leader>tn",
   ["test file"] = "<leader>tf",
   ["run last test, test last"] = "<leader>tl",
@@ -33,10 +28,7 @@ M.keymaps = {
   ["open new tab"] = "<leader><leader>t",
   ["open terminal in current buffer"] = "<c-t>",
   ["buffer selector"] = "<Leader>b",
-  ["open notes on current kunai contract"] = "<leader>or",
   ["daily personal note"] = "<leader>dp",
-  ["daily kunai note"] = "<leader>dk",
-  ["weekly kunai note"] = "<leader>wk",
   ["move to right window"] = "<A-l>",
   ["move to left window"] = "<A-h>",
   ["move down window"] = "<A-j>",
@@ -68,9 +60,6 @@ M.keymaps = {
   ["select and open ableton project"] = "<leader>ab",
   ["toggle lazy docker"] = "<leader>ld",
   ["select and open git project with intellij"] = "<Leader>ig",
-  ["make jira document"] = "<Leader>mj",
-  ["mark jira document as done"] = "<Leader>jd",
-  ["make meeting document"] = "<Leader>mm",
   ["browser history selector"] = "<Leader>bh",
   ["go run current project"] = "<Leader>gor",
   ["open terminal for current project"] = "<Leader>t",
@@ -93,7 +82,6 @@ M.keymaps = {
   ["open a file from manual repo"] = "<Leader>om",
   ["select a git branch to checkout"] = "<Leader>gco",
   ["select from vim command history"] = "<Leader>ch",
-  ["select from todo files"] = "<Leader>td",
   ["toggle gitsigns plugin"] = "<Leader>gst",
   ["luasnip jump forward"] = "<c-k>",
   ["luasnip jump back"] = "<c-j>",
@@ -107,9 +95,6 @@ M.keymaps = {
   ["quickfix next"] = "<leader>cn",
   ["quickfix previous"] = "<leader>cp",
   ["open url under cursor"] = "gx",
-  ["select from finance bookmarks"] = "<leader>of",
-  ["kunai delivery report"] = "<Leader>dr",
-  ["view securities"] = "<Leader>st",
   ["key of the day"] = "<Leader>kod",
   ["add browser bookmark"] = "<Leader>bmm",
   ["select browser bookmark"] = "<Leader>bm",
@@ -161,10 +146,6 @@ local function km(mode, lhs, rhs, desc, opts)
 end
 
 local function setup_general()
-  km("n", M.keymaps["view incomplete jira issues"], function() one_off_terminal("jira_open_incomplete_issues.sh") end,
-    "view incomplete jiras")
-  km("n", M.keymaps["create jira story"], function() one_off_terminal("jira_create_issue.sh") end,
-    "view incomplete jiras")
   km("n", M.keymaps["clear search highlight"], function() vim.cmd.nohlsearch() end, "Clear search highlight")
   km("n", M.keymaps["show current file path"], function() print(vim.fn.expand('%:p')) end, "Show current file path")
 end
@@ -341,47 +322,6 @@ vim.keymap.set("n", M.keymaps["toggle lazy docker"], function()
 
 vim.keymap.set("n", M.keymaps["select and open git project with intellij"], function()
     one_off_terminal_tab("ig")
-  end,
-  { noremap = true })
-
-local function is_integer(str)
-  return not (str == "" or str:find("%D")) -- str:match("%D") also works
-end
-
-vim.keymap.set("n", M.keymaps["make jira document"], function()
-    vim.ui.input({ prompt = "New Kunai JIRA TODO Doc: " }, function(input)
-      local filename = ""
-      local jira_prefix = "FINCORE-"
-      if (is_integer(input)) then
-        filename = jira_prefix .. input .. ".md"
-      else
-        filename = input .. ".md"
-      end
-      local new_file = "~/git/manual/employment/kunai/tasks_todo/" .. filename
-      vim.cmd("!touch " .. new_file)
-      vim.cmd.edit(vim.fn.fnameescape(new_file))
-      vim.cmd.write()
-    end)
-  end,
-  { noremap = true })
-
-vim.keymap.set("n", M.keymaps["mark jira document as done"], function()
-    -- get current file
-    local filepath = vim.fn.expand('%')
-    local filename = vim.fn.expand('%:t')
-    local done_filepath = "./jira/done/" .. filename
-    os.rename(filepath, done_filepath)
-    vim.cmd.edit(vim.fn.fnameescape(done_filepath))
-  end,
-  { noremap = true })
-
-vim.keymap.set("n", M.keymaps["make meeting document"], function()
-    vim.ui.input({ prompt = "New Meeting Name: " }, function(input)
-      local date = os.date("%Y-%m-%d")
-      local new_file = "~/git/manual/employment/kunai/tasks_todo/" .. date .. "-" .. input .. ".md"
-      vim.cmd.edit(vim.fn.fnameescape(new_file))
-      vim.cmd.write()
-    end)
   end,
   { noremap = true })
 
@@ -587,19 +527,6 @@ if ok and fzflua then
     end,
     {})
 
-  local user = os.getenv("USER")
-  vim.keymap.set("n", M.keymaps["select from todo files"], function()
-    if user == "andrewwillette" then
-      fzflua.files({
-        cwd = "~/git/manual/personaltodo/todo/",
-      })
-    else
-      fzflua.files({
-        cwd = "~/git/manual/employment/kunai/tasks_todo",
-      })
-    end
-  end, { noremap = true, silent = true })
-
   -- view buffers
   vim.keymap.set("n", M.keymaps["buffer selector"],
     function()
@@ -630,11 +557,17 @@ if ok and fzflua then
             vim.api.nvim_feedkeys(keys, "m", false)
           else
             local pattern = 'M.keymaps\\["' .. desc .. '"\\]'
-            local ok, _ = pcall(vim.cmd, 'vimgrep /' .. pattern .. '/j ~/git/dotfiles/.config/nvim/lua/**/*.lua')
-            if ok then
+            local found, _ = pcall(vim.cmd, 'vimgrep /' .. pattern .. '/j ~/git/dotfiles/.config/nvim/lua/**/*.lua')
+            if found then
               vim.cmd('cfirst')
             else
-              vim.notify("No match found for: " .. desc, vim.log.levels.WARN)
+              -- Try dotfiles_private if not found in dotfiles
+              found, _ = pcall(vim.cmd, 'vimgrep /' .. pattern .. '/j ~/git/dotfiles_private/.config/nvim/lua/**/*.lua')
+              if found then
+                vim.cmd('cfirst')
+              else
+                vim.notify("No match found for: " .. desc, vim.log.levels.WARN)
+              end
             end
           end
         end
@@ -815,25 +748,6 @@ vim.keymap.set("n", "<Leader>jf", function()
     one_off_terminal_tab "c1jenkinsfzf"
   end,
   { noremap = true })
-
-local ok, open = verify_nvim_plugin("open")
-if ok and open then
-  local openconfig = require("open-config")
-  open.set_keymap(M.keymaps["select from finance bookmarks"], openconfig.finance)
-end
-
-vim.keymap.set("n", M.keymaps["kunai delivery report"],
-  function()
-    one_off_terminal_tab("jiraclient -deliveryreport")
-  end,
-  { noremap = true, silent = true }
-)
-vim.keymap.set("n", M.keymaps["view securities"],
-  function()
-    one_off_terminal("tradingbot view-securities|less")
-  end,
-  { noremap = true, silent = true }
-)
 
 -- claude terminal integration
 local claude = require("scripts.claude")

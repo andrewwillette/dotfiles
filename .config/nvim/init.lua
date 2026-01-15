@@ -83,3 +83,10 @@ require("testing-config")
 require("browser-bookmarks-config")
 require("gp-config")
 require("notes-config")
+
+-- Load private configs from dotfiles_private if available
+local private_nvim_path = vim.fn.expand("~/git/dotfiles_private/.config/nvim/lua")
+if vim.fn.isdirectory(private_nvim_path) == 1 then
+  vim.opt.runtimepath:append(vim.fn.expand("~/git/dotfiles_private/.config/nvim"))
+  pcall(require, "private")
+end
