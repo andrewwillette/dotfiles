@@ -23,7 +23,24 @@ link_file() {
   echo "Linked $src → $dest"
 }
 
-link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+# Ensure .zshrc sources the dotfiles version
+ZSHRC_SOURCE_LINE="source \"$DOTFILES_DIR/zsh/.zshrc\""
+if [ ! -e "$HOME/.zshrc" ]; then
+  cat > "$HOME/.zshrc" << EOF
+# Source dotfiles zshrc
+$ZSHRC_SOURCE_LINE
+EOF
+  echo "Created $HOME/.zshrc"
+elif ! grep -qF "$ZSHRC_SOURCE_LINE" "$HOME/.zshrc"; then
+  cat >> "$HOME/.zshrc" << EOF
+
+# Source dotfiles zshrc
+$ZSHRC_SOURCE_LINE
+EOF
+  echo "Added dotfiles source line to $HOME/.zshrc"
+else
+  echo "$HOME/.zshrc already sources dotfiles"
+fi
 link_file "$DOTFILES_DIR/.hammerspoon" "$HOME/.hammerspoon"
 
 if [ -d "$DOTFILES_PRIVATE_DIR" ]; then
