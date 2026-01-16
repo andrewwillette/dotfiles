@@ -8,10 +8,11 @@ local home = os.getenv("HOME")
 
 if ok and notes then
   vim.keymap.set("n", km.keymaps["daily personal note"], function()
+      local daily_notes_dir = os.getenv("DAILY_PERSONAL_NOTES_DIR") or (home .. "/git/manual/general_notes/daily")
       notes.opendailynote({
-        directory = home .. "/git/manual/general_notes/daily",
+        directory = daily_notes_dir,
         filetype = ".md",
-        templatefile = home .. "/git/manual/general_notes/daily/dailyPersonalNotesTemplate.md",
+        templatefile = daily_notes_dir .. "/dailyPersonalNotesTemplate.md",
       })
     end,
     { noremap = true })
