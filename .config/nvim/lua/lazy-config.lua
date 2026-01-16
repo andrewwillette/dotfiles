@@ -129,8 +129,8 @@ local plugins = {
     },
   },
   {
-    -- "robitx/gp.nvim"
-    dir = "~/git/gp.nvim"
+    "andrewwillette/gp.nvim"
+    -- dir = "~/git/gp.nvim"
   },
   {
     'dhruvmanila/browser-bookmarks.nvim',

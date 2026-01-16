@@ -147,7 +147,8 @@ end
 
 local function setup_general()
   km("n", M.keymaps["clear search highlight"], function() vim.cmd.nohlsearch() end, "Clear search highlight")
-  km("n", M.keymaps["show current file path"], function() vim.notify(vim.fn.expand('%:p'), vim.log.levels.INFO) end, "Show current file path")
+  km("n", M.keymaps["show current file path"], function() vim.notify(vim.fn.expand('%:p'), vim.log.levels.INFO) end,
+    "Show current file path")
 end
 
 setup_general()
@@ -348,7 +349,7 @@ vim.keymap.set("n", M.keymaps["open terminal for current buffer"], function()
 
 vim.keymap.set("n", M.keymaps["open email"],
   function()
-    vim.cmd("!openEmail.sh")
+    vim.fn.system("openEmail.sh")
   end,
   { noremap = true, silent = true })
 
@@ -360,7 +361,7 @@ vim.keymap.set("n", M.keymaps["insert current date time"],
 
 vim.keymap.set("n", M.keymaps["open calendar"],
   function()
-    vim.cmd("!openCalendar.sh")
+    vim.fn.system("openCalendar.sh")
   end,
   { noremap = true, silent = true })
 
@@ -616,7 +617,7 @@ vim.keymap.set("n", M.keymaps["open session"], function()
 end, { silent = true })
 
 vim.keymap.set("n", M.keymaps["source my zshrc"], function()
-  vim.cmd "!source ~/.zshrc"
+  vim.fn.system("source ~/.zshrc")
 end, { silent = true })
 
 -- buffer next / previous
@@ -715,7 +716,7 @@ end
 -- leetcode test - add test to leetcode testing file
 vim.keymap.set("n", M.keymaps["create leetcode test"], function()
   current_buffer = get_current_buffer_absolute_path()
-  vim.cmd("!creategotest " .. current_buffer)
+  vim.fn.system("creategotest " .. current_buffer)
 end, { silent = true })
 
 local ok, browserbookmarks = verify_nvim_plugin("browser_bookmarks")

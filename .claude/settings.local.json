@@ -8,5 +8,6 @@
       "Bash(go build:*)",
       "Bash(go vet:*)"
     ]
-  }
+  },
+  "outputStyle": "default"
 }
