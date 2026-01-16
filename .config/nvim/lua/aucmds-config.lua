@@ -34,19 +34,6 @@ vim.api.nvim_create_autocmd("BufEnter",
     group = main_auto_group
   })
 
-vim.api.nvim_create_autocmd("BufRead",
-  {
-    callback = function()
-      opt.expandtab = true
-      opt.tabstop = 2
-      opt.shiftwidth = 2
-      -- hack to get treesitter working in markdown again, idk why needed
-      vim.cmd("TSBufToggle highlight")
-    end,
-    pattern = { "*.norg", "*.md" },
-    group = main_auto_group
-  })
-
 vim.api.nvim_create_autocmd("BufEnter",
   {
     callback = function()
