@@ -196,126 +196,6 @@ local function seoulboneslight()
   set_lualine("seoul256")
 end
 
-local function configurecatppuccin()
-  local ok, catppuccin = verify_plugin("catppuccin")
-  if not ok then return end
-  catppuccin.setup({
-    dim_inactive = {
-      enabled = false,
-      shade = "dark",
-      percentage = 0.15,
-    },
-    no_italic = true,
-    no_bold = true,
-    transparent_background = false,
-    term_colors = true,
-    compile = {
-      enabled = false,
-      path = vim.fn.stdpath "cache" .. "/catppuccin",
-    },
-    styles = {
-      comments = {},
-      conditionals = {},
-      loops = {},
-      functions = {},
-      keywords = {},
-      strings = {},
-      variables = {},
-      numbers = {},
-      booleans = {},
-      properties = {},
-      types = {},
-      operators = {},
-    },
-    integrations = {
-      treesitter = true,
-      native_lsp = {
-        enabled = true,
-        virtual_text = {
-          errors = {},
-          hints = {},
-          warnings = {},
-          information = {},
-        },
-      },
-      coc_nvim = false,
-      lsp_trouble = false,
-      cmp = true,
-      lsp_saga = false,
-      gitgutter = false,
-      gitsigns = true,
-      leap = false,
-      telescope = true,
-      nvimtree = true,
-      neotree = {
-        enabled = false,
-        show_root = true,
-        transparent_panel = false,
-      },
-      dap = {
-        enabled = false,
-        enable_ui = false,
-      },
-      which_key = false,
-      indent_blankline = {
-        enabled = true,
-        colored_indent_levels = false,
-      },
-      dashboard = true,
-      neogit = false,
-      vim_sneak = false,
-      fern = false,
-      barbar = false,
-      bufferline = true,
-      markdown = true,
-      lightspeed = false,
-      ts_rainbow = false,
-      hop = false,
-      notify = true,
-      telekasten = true,
-      symbols_outline = true,
-      mini = false,
-      aerial = false,
-      vimwiki = true,
-      beacon = true,
-      navic = false,
-    },
-    color_overrides = {},
-    highlight_overrides = {},
-  })
-  return catppuccin
-end
-
-local function catpuccinlightlatte()
-  configurecatppuccin()
-  vim.g.catppuccin_flavour = "latte"
-  if not verify_vim_cmd("colorscheme catppuccin") then
-    return
-  end
-  set_lualine("onelight")
-end
-
-local function catpuccindarkfrappe()
-  configurecatppuccin()
-  vim.g.catppuccin_flavour = "frappe"
-  if not verify_vim_cmd("colorscheme catppuccin") then return end
-  set_lualine("horizon")
-end
-
-local function catpuccindarkmacchiato()
-  configurecatppuccin()
-  vim.g.catppuccin_flavour = "macchiato"
-  if not verify_vim_cmd("colorscheme catppuccin") then return end
-  set_lualine("horizon")
-end
-
-local function catpuccindarkmocha()
-  configurecatppuccin()
-  vim.g.catppuccin_flavour = "mocha"
-  if not verify_vim_cmd("colorscheme catppuccin") then return end
-  set_lualine("horizon")
-end
-
 local function greenisgood()
   vim.o.background = "dark"
   if not verify_vim_cmd("colorscheme greenisgood") then return end
@@ -486,10 +366,6 @@ local colorscheme_table = {
   ["monochrome dark"] = monochrome,
   ["seoulbones dark"] = seoulbonesdark,
   ["seoulbones light"] = seoulboneslight,
-  ["catppuncin light latte"] = catpuccinlightlatte,
-  ["catppuncin dark mocha"] = catpuccindarkmocha,
-  ["catppuncin dark frappe"] = catpuccindarkfrappe,
-  ["catppuncin dark macchiato"] = catpuccindarkmacchiato,
   ["kanagawabones"] = kanagawabones,
   ["kanagawa"] = kanagawa,
   ["tundra"] = tundra,
