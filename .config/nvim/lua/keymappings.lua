@@ -322,12 +322,12 @@ vim.keymap.set("n", M.keymaps["toggle lazy docker"], function()
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["select and open git project with intellij"], function()
-    one_off_terminal_tab("ig")
+    one_off_terminal_tab("ig.sh")
   end,
   { noremap = true })
 
 vim.keymap.set("n", M.keymaps["browser history selector"], function()
-    one_off_terminal_tab("browserhistoryfzf")
+    one_off_terminal_tab("browserhistoryfzf.sh")
   end,
   { noremap = true })
 

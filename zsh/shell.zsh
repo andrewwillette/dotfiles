@@ -26,20 +26,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -d $HOME/.cargo/bin ] && export PATH="$PATH:$HOME/.cargo/bin"
 [ -d $HOME/.dotnet/tools ] && export PATH="$PATH:$HOME/.dotnet/tools"
 
-function jenv_init {
-    export PATH="$HOME/.jenv/bin:$PATH"
-    eval "$(jenv init -)"
-
-    alias je='jenv exec'
-}
-
 if test -d "$HOME/bin"; then
     PATH+=":$HOME/bin"
-fi
-
-if test -d "$HOME/git/lynx/bin";
-then
-    PATH+=":$HOME/git/lynx/bin"
 fi
 
 # add directories of scripts dir
@@ -53,30 +41,8 @@ then
     done
 fi
 
-if test -d "$HOME/maven/apache-maven-3.6.3/bin"; then
-    export PATH="$HOME/maven/apache-maven-3.6.3/bin:$PATH"
-fi
-
-if [[ $USER == "rjm995" ]] then
-  if hash nvim 2>/dev/null; then
-    EDITOR=$(which nvim)
-    # export VIMRUNTIME=$HOME/git/neovim/runtime
-  else
-    "nvim not available to set editor to"
-  fi
-else
-  if hash nvim 2>/dev/null; then
-    EDITOR=$(which nvim)
-    # export VIMRUNTIME=$HOME/git/neovim/runtime
-  else
-    "nvim not available to set editor to"
-  fi
-fi
-
+EDITOR=$(which nvim)
 alias e="$EDITOR"
-
-export PGUSER="andrew"
-export PGPASSWORD="andrew"
 
 # download youtube url as audio to ~/tmp
 yt(){
@@ -86,13 +52,7 @@ yt(){
     cd $var_path
 }
 
-alias vf='nvim `fzf`'
-alias lynx='lynx -vikeys'
 alias sz='source ~/.zshrc'
-
-run_converter() {
-    java -jar target/system-account-converter-1.0-SNAPSHOT-shaded.jar $1 $2 $3 $4
-}
 
 # Golang config
 export GOPATH=$HOME/gocode
@@ -122,32 +82,10 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=
 [ -d ~/.zsh/completion ] && fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
 
-# [[ -s '/usr/local/bin/aws_completer' ]] && complete -C '/usr/local/bin/aws_completer' aws
-
-# set -ga terminal-overrides ",xterm-256color:Tc"
-# export TERM=screen-256color
-# if [ "$TERM" = "xterm" ]; then
-#   export TERM=xterm-256color
-# fi
-alias tmux='tmux -2'  # for 256color
-
-export LYNX_CFG=~/.lynxrc
-
-#function kitchen_login_chef16() {
-    #x=$(kitchen list|awk '/chef16/ {print $1}'); kitchen login $x
-#}
-
-#function kitchen_test_chef16() {
-    #x=$(kitchen list|awk '/chef16/ {print $1}'); kitchen test $x
-#}
-
-
 [ -f ~/git/lua-language-server/bin/lua-language-server ] && export PATH="$PATH:~/git/lua-language-server/bin"
-# https://github.com/zsh-users/zsh-syntax-highlighting added via homebrew
 [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-alias g='. cdg'
+alias g='. cdg.sh'
 
 # brew --prefix outputs /usr/local for future reference
 #if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi

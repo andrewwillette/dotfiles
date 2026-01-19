@@ -24,7 +24,7 @@ link_file() {
 }
 
 # Ensure .zshrc sources the dotfiles version
-ZSHRC_SOURCE_LINE="source \"$DOTFILES_DIR/zsh/.zshrc\""
+ZSHRC_SOURCE_LINE="source \"$DOTFILES_DIR/zsh/shell.zsh\""
 if [ ! -e "$HOME/.zshrc" ]; then
   cat > "$HOME/.zshrc" << EOF
 # Source dotfiles zshrc
