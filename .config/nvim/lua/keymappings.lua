@@ -102,7 +102,6 @@ M.keymaps = {
   ["open AI prompt window"] = "<leader>gp",
   ["open new AI prompt window"] = "<leader>gpn",
   ["pick from previous AI prompt chats"] = "<leader>gpp",
-  ["take highlighted text into AI prompt"] = "<leader>gpp",
   ["select keymap configuration"] = "<leader>km",
   ["restart lsps"] = "<leader>lr",
   ["lsp show details on item"] = "K",
@@ -114,6 +113,7 @@ M.keymaps = {
   ["lsp rename variable"] = "<leader>rn",
   ["lsp diagnostic go to previous"] = "<leader>ds",
   ["lsp diagnostic go to next"] = "<leader>df",
+  ["open todo file picker"] = "<leader>td",
 
   ["send selection to claude"] = "<leader>cl",
   ["send selection to claude with prompt"] = "<leader>cp",
@@ -517,6 +517,14 @@ if ok and fzflua then
       })
     end,
     { noremap = true, silent = true })
+  vim.keymap.set("n", M.keymaps["open todo file picker"], function()
+    local todo_dir = vim.env.DOTFILES_TODO_DIR
+    if not todo_dir or todo_dir == "" then
+      vim.notify("DOTFILES_TODO_DIR environment variable is not set", vim.log.levels.ERROR)
+      return
+    end
+    fzflua.files({ cwd = todo_dir })
+  end, { noremap = true, silent = true })
   vim.keymap.set("n", M.keymaps["select a git branch to checkout"],
     function()
       fzflua.git_branches({})
