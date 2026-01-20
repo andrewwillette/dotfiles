@@ -4,11 +4,14 @@ local km = require("keymappings")
 local scripts = require("scripts")
 local verify_nvim_plugin = scripts.verify_nvim_plugin
 local ok, notes = verify_nvim_plugin("notes")
-local home = os.getenv("HOME")
 
 if ok and notes then
   vim.keymap.set("n", km.keymaps["daily personal note"], function()
-      local daily_notes_dir = os.getenv("DAILY_PERSONAL_NOTES_DIR") or (home .. "/git/manual/general_notes/daily")
+      local daily_notes_dir = os.getenv("DOTFILES_DAILY_NOTES")
+      if not daily_notes_dir or daily_notes_dir == "" then
+        vim.notify("DOTFILES_DAILY_NOTES environment variable is not set", vim.log.levels.ERROR)
+        return
+      end
       notes.opendailynote({
         directory = daily_notes_dir,
         filetype = ".md",
