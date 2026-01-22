@@ -57,35 +57,35 @@ grid.setGrid("2x2")
 
 -- Left half: start at col 0, row 0, span 1 col, span 2 rows
 hotkey.bind({ "cmd", "alt" }, "h", function()
-  hs.grid.set(hs.window.focusedWindow(), { 0, 0, 1, 2 })
+  hs.grid.set(window.focusedWindow(), { 0, 0, 1, 2 })
 end)
 -- Right half: start at col 1, row 0, span 1 col, span 2 rows
 hotkey.bind({ "cmd", "alt" }, "l", function()
-  hs.grid.set(hs.window.focusedWindow(), { 1, 0, 1, 2 })
+  hs.grid.set(window.focusedWindow(), { 1, 0, 1, 2 })
 end)
 -- Top half: start at col 0, row 0, span 2 cols, span 1 row
 hotkey.bind({ "cmd", "alt" }, "k", function()
-  hs.grid.set(hs.window.focusedWindow(), { 0, 0, 2, 1 })
+  hs.grid.set(window.focusedWindow(), { 0, 0, 2, 1 })
 end)
 -- Bottom half: start at col 0, row 1, span 2 cols, span 1 row
 hotkey.bind({ "cmd", "alt" }, "j", function()
-  hs.grid.set(hs.window.focusedWindow(), { 0, 1, 2, 1 })
+  hs.grid.set(window.focusedWindow(), { 0, 1, 2, 1 })
 end)
 -- Top-left quadrant: start at col 0, row 0, span 1 col, span 1 row
 hotkey.bind({ "cmd", "alt" }, "u", function()
-  hs.grid.set(hs.window.focusedWindow(), { 0, 0, 1, 1 })
+  hs.grid.set(window.focusedWindow(), { 0, 0, 1, 1 })
 end)
 -- Top-right quadrant: start at col 1, row 0, span 1 col, span 1 row
 hotkey.bind({ "cmd", "alt" }, "i", function()
-  hs.grid.set(hs.window.focusedWindow(), { 1, 0, 1, 1 })
+  hs.grid.set(window.focusedWindow(), { 1, 0, 1, 1 })
 end)
 -- Bottom-left quadrant: start at col 0, row 1, span 1 col, span 1 row
 hotkey.bind({ "cmd", "alt" }, "n", function()
-  hs.grid.set(hs.window.focusedWindow(), { 0, 1, 1, 1 })
+  hs.grid.set(window.focusedWindow(), { 0, 1, 1, 1 })
 end)
 -- Bottom-right quadrant: start at col 1, row 1, span 1 col, span 1 row
 hotkey.bind({ "cmd", "alt" }, "m", function()
-  hs.grid.set(hs.window.focusedWindow(), { 1, 1, 1, 1 })
+  hs.grid.set(window.focusedWindow(), { 1, 1, 1, 1 })
 end)
 
 local function openabletonexercise()
