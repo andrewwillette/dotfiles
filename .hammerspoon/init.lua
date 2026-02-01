@@ -10,6 +10,7 @@ hotkey.bind({ "cmd", "alt", "ctrl" }, "R", function() hs.reload() end)
 
 local scriptsDir = "~/git/scripts"
 local user = os.getenv("USER")
+local terminalApp = os.getenv("HAMMERSPOON_TERMINAL") or "kitty"
 if (user == "andrewwillette") then
   hotkey.bind({ "cmd", "ctrl" }, "c", function() application.launchOrFocus("Brave Browser") end)
 else
@@ -18,7 +19,7 @@ else
 end
 
 hotkey.bind({ "cmd", "ctrl" }, "s", function() application.launchOrFocus("Slack") end)
-hotkey.bind({ "cmd", "ctrl" }, "z", function() application.launchOrFocus("kitty") end)
+hotkey.bind({ "cmd", "ctrl" }, "z", function() application.launchOrFocus(terminalApp) end)
 hotkey.bind({ "cmd", "ctrl" }, "v", function() application.launchOrFocus("ChatGPT") end)
 hotkey.bind({ "cmd", "ctrl" }, "k", function() application.launchOrFocus("Amazon Kindle") end)
 hotkey.bind({ "cmd", "ctrl" }, "a", function() application.launchOrFocus("Ableton Live 12 Standard") end)
