@@ -41,6 +41,17 @@ then
     done
 fi
 
+# add directories of scripts_public dir
+SCRIPTS_PUBLIC_DIR="$HOME/git/scripts_public"
+if test -d "$SCRIPTS_PUBLIC_DIR";
+then
+    PATH+=:"$SCRIPTS_PUBLIC_DIR"
+    for dir in $SCRIPTS_PUBLIC_DIR/*/ ; do
+        TRIMMED=$(echo $dir | sed 's:/*$::')
+        PATH+=":$TRIMMED"
+    done
+fi
+
 EDITOR=$(which nvim)
 alias e="$EDITOR"
 
