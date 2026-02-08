@@ -6,7 +6,8 @@
       "Bash(mkdir:*)",
       "Bash(./scripts/test-nvim-startup.sh:*)",
       "Bash(go build:*)",
-      "Bash(go vet:*)"
+      "Bash(go vet:*)",
+      "Bash(/Users/andrewwillette/git/dotfiles/scripts/test-nvim-startup.sh:*)"
     ]
   },
   "outputStyle": "default"

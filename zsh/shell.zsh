@@ -125,7 +125,7 @@ export ASAN_OPTIONS="detect_leaks=1:check_initialization_order=1:log_path=/Users
 [ -f /usr/local/cof/bin/cofproxy ] && source /usr/local/cof/bin/cofproxy &>/dev/null
 
 
-[ -f ~/git/dotfiles/.gitignore_global ] && git config --global core.excludesfile ~/git/dotfiles/.gitignore_global
+[ -f ~/git/dotfiles/git/.gitignore_global ] && git config --global core.excludesfile ~/git/dotfiles/git/.gitignore_global
 alias lzd='lazydocker'
 
 [ -d "$HOME/Library/Application Support/Coursier/bin" ] && export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"

@@ -58,6 +58,4 @@ for dir in "$DOTFILES_DIR/.config/"*; do
   link_file "$dir" "$CONFIG_DIR/$name"
 done
 
-link_file "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
-
 echo "Dotfiles installation complete."
