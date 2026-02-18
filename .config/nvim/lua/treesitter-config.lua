@@ -1,9 +1,9 @@
 require 'nvim-treesitter'.setup {
   install_dir = vim.fn.stdpath('data') .. '/site',
 }
-require 'nvim-treesitter'.install { 'go', 'rust', 'markdown', 'json', 'bash', 'lua', 'gomod', 'python' }
+require 'nvim-treesitter'.install { 'go', 'rust', 'markdown', 'json', 'bash', 'lua', 'gomod', 'python', 'typescript' }
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'go', 'rs', 'md', 'lua', 'markdown', 'gomod', 'python' },
+  pattern = { 'go', 'rs', 'md', 'lua', 'markdown', 'gomod', 'python', 'typescript' },
   callback = function() vim.treesitter.start() end,
 })
