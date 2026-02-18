@@ -10,6 +10,7 @@ hotkey.bind({ "cmd", "alt", "ctrl" }, "R", function() hs.reload() end)
 
 local scriptsDir = "~/git/scripts"
 local user = os.getenv("USER")
+local home = os.getenv("home")
 if (user == "andrewwillette") then
   hotkey.bind({ "cmd", "ctrl" }, "c", function() application.launchOrFocus("Brave Browser") end)
 else
@@ -30,7 +31,8 @@ hotkey.bind({ "cmd", "ctrl" }, "a", function() application.launchOrFocus("Ableto
 -- hotkey.bind({ "cmd", "ctrl" }, "a", function() hs.execute("~/git/dotfiles/scripts/browser/openCalendar.sh") end)
 hotkey.bind({ "cmd", "ctrl" }, "m", function() hs.execute(scriptsDir .. "/browser/openEmail.sh") end)
 hotkey.bind({ "cmd", "ctrl" }, "j", function() hs.execute(scriptsDir .. "/browser/openJira.sh") end)
-hotkey.bind({ "cmd", "ctrl" }, "p", function() hs.execute(scriptsDir .. "/browser/openPortfolio.sh") end)
+-- hotkey.bind({ "cmd", "ctrl" }, "p", function() hs.execute(home .. "/gocode/bin/webwalker --flow fidelity", true) end)
+hotkey.bind({ "cmd", "ctrl" }, "p", function() hs.execute(scriptsDir .. "/browser/openPortfolio.sh", true) end)
 hotkey.bind({ "cmd", "ctrl" }, "g", function()
   hs.focus()
   local ok, result = hs.dialog.textPrompt("Search Google", "Google search string:")

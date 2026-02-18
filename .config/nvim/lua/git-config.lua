@@ -36,13 +36,6 @@ vim.keymap.set("n", km.keymaps["git log"],
 vim.keymap.set("n", km.keymaps["git diff fugitive view"], ":Gvdiffsplit!<cr>",
   { noremap = true, silent = true })
 
-vim.keymap.set("n", km.keymaps["git status"],
-  function()
-    -- vim.cmd "G status"
-    scripts.init_split_term("gits.sh")
-  end,
-  { noremap = true, silent = true })
-
 vim.keymap.set("n", km.keymaps["git pull"],
   function()
     vim.cmd "G pull"
@@ -71,3 +64,9 @@ vim.keymap.set("n", km.keymaps["git checkout new branch"], function()
     vim.cmd("!git checkout -B " .. input)
   end)
 end, { noremap = true })
+
+vim.keymap.set("n", km.keymaps["git status"],
+  function()
+    require('fzf-lua').git_status()
+  end,
+  { noremap = true, silent = true })
