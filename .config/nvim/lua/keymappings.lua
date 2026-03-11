@@ -399,7 +399,7 @@ if ok and fzflua then
         actions = {
           ['default'] = function(selected)
             fzflua.git_files({ cwd = "~/git/" .. selected[1] })
-            vim.defer_fn(function() vim.cmd.startinsert() end, 10)
+            vim.defer_fn(function() vim.cmd.startinsert() end, 30)
           end
         }
       })
@@ -411,7 +411,7 @@ if ok and fzflua then
         actions = {
           ['default'] = function(selected)
             fzflua.live_grep({ cwd = "~/git/" .. selected[1] })
-            vim.defer_fn(function() vim.cmd.startinsert() end, 10)
+            vim.defer_fn(function() vim.cmd.startinsert() end, 30)
           end
         }
       })
