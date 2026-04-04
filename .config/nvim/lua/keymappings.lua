@@ -4,6 +4,7 @@ local M = {}
 M.keymaps = {
   ["clear search highlight"] = "<Leader>/",
   ["show current file path"] = "<leader>cb",
+  ["look up word in dictionary"] = "<leader>d",
   ["no-op leader"] = "<leader>",
   ["open file tree"] = "<leader>1",
   ["open file tree on current buffer"] = "<leader>2",
@@ -29,6 +30,7 @@ M.keymaps = {
   ["open terminal in current buffer"] = "<c-t>",
   ["buffer selector"] = "<Leader>b",
   ["daily personal note"] = "<leader>dp",
+  ["weekly personal note"] = "<leader>wp",
   ["move to right window"] = "<A-l>",
   ["move to left window"] = "<A-h>",
   ["move down window"] = "<A-j>",
@@ -746,6 +748,11 @@ if ok and browsemarks then
     { noremap = true, silent = true }
   )
 end
+
+vim.keymap.set("n", M.keymaps["look up word in dictionary"], function()
+    require("dictionary").lookup()
+  end,
+  { noremap = true })
 
 vim.keymap.set("n", M.keymaps["key of the day"], function()
     local kod = require("keyofday").keyofday()

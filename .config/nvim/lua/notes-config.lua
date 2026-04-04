@@ -19,6 +19,24 @@ if ok and notes then
       })
     end,
     { noremap = true })
+  vim.keymap.set("n", km.keymaps["weekly personal note"], function()
+      local weekly_notes_dir = os.getenv("DOTFILES_WEEKLY_PERSONAL_NOTES")
+      local weekly_notes_template = os.getenv("DOTFILES_WEEKLY_PERSONAL_NOTES_TEMPLATE")
+      if not weekly_notes_dir or weekly_notes_dir == "" then
+        vim.notify("DOTFILES_WEEKLY_PERSONAL_NOTES environment variable is not set", vim.log.levels.ERROR)
+        return
+      end
+      if not weekly_notes_template or weekly_notes_template == "" then
+        vim.notify("DOTFILES_WEEKLY_PERSONAL_NOTES_TEMPLATE environment variable is not set", vim.log.levels.ERROR)
+        return
+      end
+      notes.openweeklynote({
+        directory = weekly_notes_dir,
+        filetype = ".md",
+        templatefile = weekly_notes_template,
+      })
+    end,
+    { noremap = true })
 end
 
 vim.keymap.set("n", km.keymaps["open diary entry"], function()

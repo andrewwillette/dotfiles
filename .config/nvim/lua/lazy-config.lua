@@ -16,11 +16,12 @@ bootstrap_lazy()
 
 local plugins = {
   "andrewwillette/notes.nvim",
+  "andrewwillette/dictionary.nvim",
   -- { dir = "~/git/notes.nvim" },
   "andrewwillette/open.nvim",
   "andrewwillette/keyofday.nvim",
   "andrewwillette/projectnotes.nvim",
-  -- "neovim/nvim-lspconfig",
+  "neovim/nvim-lspconfig",
   "hrsh7th/cmp-nvim-lsp",
   -- colorschemes
   "ellisonleao/gruvbox.nvim",
@@ -76,11 +77,13 @@ local plugins = {
     lazy = false
   },
   "sebdah/vim-delve",
-  "mfussenegger/nvim-dap",
-  "leoluz/nvim-dap-go",
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = { "leoluz/nvim-dap-go", "nvim-neotest/nvim-nio", "jbyuki/one-small-step-for-vimkind" }
+  },
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
+    dependencies = { "nvim-neotest/nvim-nio" }
   },
   {
     "nvim-neotest/neotest",
@@ -148,6 +151,11 @@ local plugins = {
     -- dev = { true },
   },
   -- { dir = "~/git/lsplogs.nvim" },
+  {
+    "seblj/roslyn.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    ft = "cs",
+  },
 }
 
 -- added to get nvim --headless 'PlenaryBusted' to have plugins on runtime path

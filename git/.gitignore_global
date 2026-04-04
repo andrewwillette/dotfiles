@@ -23,5 +23,6 @@ Session.vim
 .ccls-cache
 **/.ccls-cache
 luarc.json
+.github/copilot-instructions.md
 
 pyrightconfig.json

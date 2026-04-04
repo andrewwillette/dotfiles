@@ -87,6 +87,25 @@ vim.lsp.config.clangd = {
   cmd = { "clangd" },
 }
 
+local ok_roslyn, roslyn = pcall(require, "roslyn")
+if ok_roslyn then
+  roslyn.setup({
+    config = {
+      on_attach = lsp_on_attach,
+      capabilities = lsp_capabilities,
+      settings = {
+        ["csharp|inlay_hints"] = {
+          csharp_enable_inlay_hints_for_implicit_object_creation = true,
+          csharp_enable_inlay_hints_for_implicit_variable_types = true,
+        },
+        ["csharp|code_lens"] = {
+          dotnet_enable_references_code_lens = true,
+        },
+      },
+    },
+  })
+end
+
 local function set_python_path(command)
   local path = command.args
   local clients = vim.lsp.get_clients {
