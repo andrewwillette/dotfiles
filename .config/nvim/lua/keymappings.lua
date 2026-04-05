@@ -106,6 +106,7 @@ M.keymaps = {
   ["pick from previous AI prompt chats"] = "<leader>gpp",
   ["select keymap configuration"] = "<leader>km",
   ["restart lsps"] = "<leader>lr",
+  ["lsp health"] = "<leader>lh",
   ["lsp show details on item"] = "K",
   ["lsp go to definition"] = "gd",
   ["lsp get references"] = "gr",

@@ -87,23 +87,31 @@ vim.lsp.config.clangd = {
   cmd = { "clangd" },
 }
 
+vim.lsp.config("roslyn", {
+  cmd = {
+    "dotnet",
+    vim.fn.expand(
+      "~/Downloads/roslynwork/roslyn-extracted/content/LanguageServer/neutral/Microsoft.CodeAnalysis.LanguageServer.dll"),
+    "--logLevel=Information",
+    "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.log.get_filename()),
+    "--stdio",
+  },
+  on_attach = lsp_on_attach,
+  capabilities = lsp_capabilities,
+  settings = {
+    ["csharp|inlay_hints"] = {
+      csharp_enable_inlay_hints_for_implicit_object_creation = true,
+      csharp_enable_inlay_hints_for_implicit_variable_types = true,
+    },
+    ["csharp|code_lens"] = {
+      dotnet_enable_references_code_lens = true,
+    },
+  },
+})
+
 local ok_roslyn, roslyn = pcall(require, "roslyn")
 if ok_roslyn then
-  roslyn.setup({
-    config = {
-      on_attach = lsp_on_attach,
-      capabilities = lsp_capabilities,
-      settings = {
-        ["csharp|inlay_hints"] = {
-          csharp_enable_inlay_hints_for_implicit_object_creation = true,
-          csharp_enable_inlay_hints_for_implicit_variable_types = true,
-        },
-        ["csharp|code_lens"] = {
-          dotnet_enable_references_code_lens = true,
-        },
-      },
-    },
-  })
+  roslyn.setup({})
 end
 
 local function set_python_path(command)
@@ -209,8 +217,50 @@ function restartLSP()
   vim.cmd('edit') -- Reloads the current buffer to start the client
 end
 
--- restartLSP()
 set_normal_mode_keymap(M.keymaps["restart lsps"], restartLSP, {})
+
+function checkHealthLSP()
+  local clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
+  local lines = { "LSP Health", string.rep("─", 40) }
+  if #clients == 0 then
+    table.insert(lines, "No LSP clients attached to current buffer")
+  else
+    for _, client in ipairs(clients) do
+      table.insert(lines, string.format("● %s (id: %d)", client.name, client.id))
+      table.insert(lines, string.format("  root: %s", client.root_dir or "none"))
+      local ft = table.concat(client.config.filetypes or {}, ", ")
+      if ft ~= "" then
+        table.insert(lines, string.format("  filetypes: %s", ft))
+      end
+    end
+  end
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.bo[buf].modifiable = false
+
+  local width = 50
+  local height = #lines
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    style = "minimal",
+    border = "rounded",
+  })
+
+  vim.keymap.set("n", "q", function()
+    vim.api.nvim_win_close(win, true)
+  end, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "<Esc>", function()
+    vim.api.nvim_win_close(win, true)
+  end, { buffer = buf, nowait = true })
+end
+
+-- restartLSP()
+set_normal_mode_keymap(M.keymaps["lsp health"], checkHealthLSP, {})
 
 vim.lsp.enable({ "gopls", "luals", "bashls", "rust_analyzer", "clangd", "pyright", "vtsls" })
 

@@ -7,7 +7,9 @@
       "Bash(./scripts/test-nvim-startup.sh:*)",
       "Bash(go build:*)",
       "Bash(go vet:*)",
-      "Bash(/Users/andrewwillette/git/dotfiles/scripts/test-nvim-startup.sh:*)"
+      "Bash(/Users/andrewwillette/git/dotfiles/scripts/test-nvim-startup.sh:*)",
+      "Bash(echo:*)",
+      "Bash(nvim --version)"
     ]
   },
   "outputStyle": "default"
