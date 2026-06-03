@@ -1,3 +1,7 @@
+-- Make homebrew luarocks available (Hammerspoon doesn't inherit shell LUA_PATH)
+package.path = package.path .. ";/opt/homebrew/share/lua/5.5/?.lua;/opt/homebrew/share/lua/5.5/?/init.lua"
+package.cpath = package.cpath .. ";/opt/homebrew/lib/lua/5.5/?.so"
+
 local grid = hs.grid
 local hotkey = hs.hotkey
 local window = hs.window
@@ -94,20 +98,21 @@ hotkey.bind({ "cmd", "alt" }, "m", function()
   hs.grid.set(window.focusedWindow(), { 1, 1, 1, 1 })
 end)
 
+-- add a comment explaining how this module is pulled in
 local function openabletonexercise()
-  local key_module = require("keyofday")
-  if key_module ~= nil then
-    local key = key_module.keyofday()
-    local keyofdayableton = "/Users/andrewwillette/Documents/Production/fiddle_projects/daily_exercises_" ..
-        key .. " Project/daily_exercises_" .. key .. ".als"
-    hs.execute("open '" .. keyofdayableton .. "'")
-    application.launchOrFocus("Ableton Live 12 Standard")
+  local ok, key_module = pcall(require, "keyofday")
+  if not ok then
+    hs.alert.show("require keyofday failed: " .. tostring(key_module))
+    return
   end
+  local key = key_module.keyofday()
+  local keyofdayableton = "/Users/andrewwillette/Documents/Production/fiddle_projects/daily_exercises_" ..
+      key .. " Project/daily_exercises_" .. key .. ".als"
+  local openCommand = "open '" .. keyofdayableton .. "'"
+  hs.execute(openCommand)
+  application.launchOrFocus("Ableton Live 12 Standard")
 end
 
 hotkey.bind({ "cmd", "ctrl" }, "e", openabletonexercise)
-hotkey.bind({ "cmd", "ctrl" }, "t", function()
-  hs.execute("open 'x-apple.systempreferences:com.apple.Screen-Time-Settings.extension'")
-end)
 
 hs.alert.show("Hammerspoon Config Loaded")

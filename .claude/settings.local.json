@@ -9,7 +9,12 @@
       "Bash(go vet:*)",
       "Bash(/Users/andrewwillette/git/dotfiles/scripts/test-nvim-startup.sh:*)",
       "Bash(echo:*)",
-      "Bash(nvim --version)"
+      "Bash(nvim --version)",
+      "Read(//Users/andrewwillette/.local/state/nvim/**)",
+      "Bash(luarocks path:*)",
+      "Bash(luarocks list:*)",
+      "Read(//opt/homebrew/share/lua/**)",
+      "Read(//opt/homebrew/lib/lua/**)"
     ]
   },
   "outputStyle": "default"
