@@ -115,4 +115,9 @@ end
 
 hotkey.bind({ "cmd", "ctrl" }, "e", openabletonexercise)
 
+hotkey.bind({ "cmd", "ctrl" }, "r", function()
+  local output, status, typ, rc = hs.execute("/Users/andrewwillette/gocode/bin/musicstudio --random-song 2>&1")
+  hs.alert.show(output ~= "" and output or ("exit " .. tostring(rc)), 6)
+end)
+
 hs.alert.show("Hammerspoon Config Loaded")

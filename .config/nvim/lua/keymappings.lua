@@ -437,55 +437,51 @@ if ok and fzflua then
     end,
     { noremap = true, silent = true })
 
-  -- prompt user for upload or open? if upload, prompt user for youtube_url and transcript_title, execute command 'cleansrt -o $HOME/tmp/youtubetranscripts/<transcript_title>.txt "<youtube_url>"' with inputted value, make sure to surround with quotes correctly, wait for completion of command, then execute fzf tool on files in $HOME/tmp/youtubetranscripts to open as ":e <file>"
-  -- if option selected is open, just execute fzf tool on files in $HOME/tmp/youtubetranscripts to open as ":e <file>"
+  -- cleansrt owns the youtube URL prompt (--download-transcript) and the fzf
+  -- selection over existing transcripts (no args); this keymap just runs it
+  -- in a small terminal split and opens whatever file path it prints.
   vim.keymap.set("n", M.keymaps["toggle youtube transcript handler"], function()
-    local choice = vim.fn.input("Upload new transcript or open existing? (u/o): ")
-
-    local transcripts_dir = vim.fn.expand("~/tmp/youtubetranscripts")
-    vim.fn.mkdir(transcripts_dir, "p") -- ensure dir exists
-
-    if choice == "u" then
-      local youtube_url = vim.fn.input("YouTube URL: ")
-      if youtube_url == "" then
-        vim.notify("You must provide a YouTube URL", vim.log.levels.WARN)
-        return
-      end
-
-      -- Build command safely (handles spaces etc.)
-      local cmd = string.format(
-        "cleansrt -od %s %s",
-        vim.fn.shellescape(transcripts_dir),
-        vim.fn.shellescape(youtube_url)
-      )
-
-      -- Run and capture stdout (should be just the file path)
-      local out = vim.fn.system(cmd)
-      if vim.v.shell_error ~= 0 then
-        vim.notify("Error running cleansrt command", vim.log.levels.ERROR)
-        return
-      end
-
-      -- Trim trailing whitespace/newlines
-      local path = out:gsub("%s+$", "")
-      if path == "" then
-        vim.notify("cleansrt returned an empty path", vim.log.levels.ERROR)
-        return
-      end
-
-      -- Open the file; fnameescape handles spaces and special chars
-      vim.cmd("edit " .. vim.fn.fnameescape(path))
-    elseif choice == "o" then
-      -- Run fzf to pick a transcript file to open
-      fzflua.fzf_exec("ls " .. transcripts_dir, {
-        actions = {
-          ['default'] = function(selected)
-            local file_to_open = transcripts_dir .. "/" .. selected[1]
-            vim.cmd.edit(vim.fn.fnameescape(file_to_open))
-          end
-        }
-      })
+    local choice = vim.fn.input("Download new transcript or open existing? (d/o): ")
+    if choice ~= "d" and choice ~= "o" then
+      return
     end
+
+    local cmd = choice == "d" and "cleansrt --download-transcript" or "cleansrt"
+    local origin_win = vim.api.nvim_get_current_win()
+
+    vim.cmd("botright split")
+    vim.cmd("resize 15")
+    vim.cmd("enew")
+    local term_win = vim.api.nvim_get_current_win()
+    local term_buf = vim.api.nvim_get_current_buf()
+
+    vim.fn.termopen(cmd, {
+      on_exit = function(_, exit_code)
+        local last_line
+        local lines = vim.api.nvim_buf_get_lines(term_buf, 0, -1, false)
+        for i = #lines, 1, -1 do
+          if lines[i]:match("%S") then
+            last_line = vim.trim(lines[i])
+            break
+          end
+        end
+
+        if vim.api.nvim_win_is_valid(term_win) then
+          vim.api.nvim_win_close(term_win, true)
+        end
+
+        if exit_code == 0 and last_line then
+          if vim.api.nvim_win_is_valid(origin_win) then
+            vim.api.nvim_set_current_win(origin_win)
+          end
+          vim.cmd("edit " .. vim.fn.fnameescape(last_line))
+        else
+          vim.notify(last_line or "cleansrt failed", vim.log.levels.ERROR)
+        end
+      end,
+    })
+
+    vim.cmd("startinsert")
   end, { noremap = true, silent = true })
 
   vim.keymap.set("n", M.keymaps["select a git project and open terminal for it"], function()

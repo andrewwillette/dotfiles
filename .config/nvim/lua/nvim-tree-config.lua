@@ -22,10 +22,6 @@ nvim_tree.setup {
       error = "",
     }
   },
-  system_open         = {
-    cmd  = nil,
-    args = {}
-  },
   filters             = {
     dotfiles = false,
     custom = {}

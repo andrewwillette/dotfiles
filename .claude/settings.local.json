@@ -14,7 +14,14 @@
       "Bash(luarocks path:*)",
       "Bash(luarocks list:*)",
       "Read(//opt/homebrew/share/lua/**)",
-      "Read(//opt/homebrew/lib/lua/**)"
+      "Read(//opt/homebrew/lib/lua/**)",
+      "Read(//Users/andrewwillette/**)",
+      "Bash(find / -iname \"*cleansrt*\")",
+      "Bash(gofmt -l .)",
+      "Bash(/tmp/cleansrt_build_test *)",
+      "Bash(expect -c ' *)",
+      "Bash(luac -p .config/nvim/lua/keymappings.lua)",
+      "Bash(git *)"
     ]
   },
   "outputStyle": "default"

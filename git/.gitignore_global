@@ -26,3 +26,5 @@ luarc.json
 .github/copilot-instructions.md
 
 pyrightconfig.json
+
+**/.claude/settings.local.json

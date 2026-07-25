@@ -50,6 +50,17 @@ if [ -d "$DOTFILES_PRIVATE_DIR" ]; then
   link_file "$DOTFILES_PRIVATE_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 fi
 
+SKILLS_SRC="$HOME/git/skills"
+SKILLS_DEST="$HOME/.claude/skills"
+if [ -d "$SKILLS_SRC" ]; then
+  mkdir -p "$SKILLS_DEST"
+  for dir in "$SKILLS_SRC"/*/; do
+    [ -d "$dir" ] || continue
+    name=$(basename "$dir")
+    link_file "$dir" "$SKILLS_DEST/$name"
+  done
+fi
+
 mkdir -p "$CONFIG_DIR"
 
 for dir in "$DOTFILES_DIR/.config/"*; do
