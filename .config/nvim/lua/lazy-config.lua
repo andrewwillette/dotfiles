@@ -101,8 +101,6 @@ local plugins = {
   "theHamsta/nvim-dap-virtual-text",
   "nvim-lualine/lualine.nvim",
   "milisims/nvim-luaref",
-  "jose-elias-alvarez/null-ls.nvim",
-  "jose-elias-alvarez/nvim-lsp-ts-utils",
   "chentoast/marks.nvim",
   "hashivim/vim-terraform",
   "lewis6991/gitsigns.nvim",
