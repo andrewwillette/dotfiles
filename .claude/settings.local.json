@@ -21,7 +21,17 @@
       "Bash(/tmp/cleansrt_build_test *)",
       "Bash(expect -c ' *)",
       "Bash(luac -p .config/nvim/lua/keymappings.lua)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(awk -F'\"' '/^  \\\\[\".*\"\\\\] = \"/{print $4}' keymappings.lua)",
+      "Bash(awk '$1>1')",
+      "Bash(awk '{print $2, $3, $0}')",
+      "Bash(nvim --headless -c 'lua vim.diagnostic.config\\({virtual_text=true}\\); print\\(vim.inspect\\(vim.diagnostic.config\\(\\)\\)\\)' -c 'qa')",
+      "Bash(nvim --headless --server /tmp/nonexistent_socket_test --remote-send 'ihello<Esc>')",
+      "Bash(mdfind \"kMDItemCFBundleIdentifier == 'net.kovidgoyal.kitty'\")",
+      "Read(//Applications/**)",
+      "Bash(/usr/bin/env -i /bin/sh -c 'echo $PATH; which nvim; which open')",
+      "Bash(/Applications/kitty.app/Contents/MacOS/kitty --help)",
+      "Bash(luac -p /Users/andrewwillette/git/dotfiles/.hammerspoon/init.lua)"
     ]
   },
   "outputStyle": "default"

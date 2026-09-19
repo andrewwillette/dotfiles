@@ -21,13 +21,62 @@ if (user == "andrewwillette") then
 else
   hotkey.bind({ "cmd", "ctrl" }, "c", function() application.launchOrFocus("Google Chrome") end)
 end
-hotkey.bind({ "cmd", "ctrl" }, "s", function() application.launchOrFocus("Slack") end)
-
 -- use launchctl to set this var
 -- eg:
 -- launchctl setenv HAMMERSPOON_TERMINAL terminal
 local terminalApp = os.getenv("HAMMERSPOON_TERMINAL") or "kitty"
 hotkey.bind({ "cmd", "ctrl" }, "z", function() application.launchOrFocus(terminalApp) end)
+
+-- Runs open_ableton_fiddle_project.sh, preferring (in order):
+--   1. An already-running nvim (normally running inside kitty) -- reuse its
+--      "<leader>ab" keymap so the script opens in a terminal split there.
+--   2. An already-running kitty instance (see listen_on/allow_remote_control
+--      in kitty.conf) -- add a new tab there via kitty's remote control
+--      socket instead of spawning a whole new kitty process.
+--   3. Otherwise, spawn a new kitty instance via `open`.
+-- Cases 1 and 2 reuse an existing, possibly unfocused window, so we need to
+-- explicitly focus kitty afterward. Case 3 is skipped because `open` already
+-- focuses the new window itself -- calling launchOrFocus there would race
+-- with the new window's creation and could steal focus back to a different,
+-- pre-existing kitty window instead.
+-- The script is run through `zsh -l` (not directly) so it sources
+-- ~/.zprofile and picks up the homebrew PATH -- apps launched via `open` or
+-- kitty's remote control inherit launchd's bare PATH, which doesn't include
+-- /opt/homebrew/bin, so fzf would be missing and the script/window would
+-- close immediately.
+local function runAbletonFiddleProject()
+  local abletonScript = os.getenv("HOME") .. "/git/scripts/ableton/open_ableton_fiddle_project.sh"
+  local tmpdir = (os.getenv("TMPDIR") or "/tmp"):gsub("/*$", "")
+  local nvimSockGlob = tmpdir .. "/nvim." .. user .. "/*/nvim.*.0"
+  local kittySockGlob = tmpdir .. "/kitty-*"
+  local shellCmd = [[
+    mode=new
+    for sock in $(ls -t ]] .. nvimSockGlob .. [[ 2>/dev/null); do
+      if /opt/homebrew/bin/nvim --headless --server "$sock" --remote-send '<C-\><C-n> ab' 2>/dev/null; then
+        mode=reuse
+        break
+      fi
+    done
+    if [ "$mode" = "new" ]; then
+      for sock in $(ls -t ]] .. kittySockGlob .. [[ 2>/dev/null); do
+        if /Applications/kitty.app/Contents/MacOS/kitty @ --to "unix:$sock" launch --type=tab --cwd=current /bin/zsh -l -c "]] .. abletonScript .. [[" 2>/dev/null; then
+          mode=reuse
+          break
+        fi
+      done
+    fi
+    if [ "$mode" = "new" ]; then
+      open -na kitty --args -e /bin/zsh -l -c "]] .. abletonScript .. [["
+    fi
+    echo "$mode"
+  ]]
+  local mode = hs.execute(shellCmd)
+  if (mode or ""):match("^reuse") then
+    application.launchOrFocus(terminalApp)
+  end
+end
+
+hotkey.bind({ "cmd", "ctrl" }, "s", runAbletonFiddleProject)
 
 hotkey.bind({ "cmd", "ctrl" }, "k", function() application.launchOrFocus("Amazon Kindle") end)
 hotkey.bind({ "cmd", "ctrl" }, "a", function() application.launchOrFocus("Ableton Live 12 Standard") end)

@@ -1,4 +1,4 @@
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local M = require("keymappings")
 local set_normal_mode_keymap = function(lhs, rhs_func, opts)
