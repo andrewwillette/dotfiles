@@ -27,9 +27,12 @@ end
 local terminalApp = os.getenv("HAMMERSPOON_TERMINAL") or "kitty"
 hotkey.bind({ "cmd", "ctrl" }, "z", function() application.launchOrFocus(terminalApp) end)
 
--- Runs open_ableton_fiddle_project.sh, preferring (in order):
---   1. An already-running nvim (normally running inside kitty) -- reuse its
---      "<leader>ab" keymap so the script opens in a terminal split there.
+-- Runs a shell command that needs a real TTY (e.g. anything piping through
+-- fzf) in a terminal, preferring (in order):
+--   1. An already-running nvim (normally running inside kitty) -- reuse it by
+--      calling scripts.init_split_term(command) directly (the same helper
+--      the "<leader>ab" keymap calls) so the command opens in a terminal
+--      split there, without needing a dedicated keymap per command.
 --   2. An already-running kitty instance (see listen_on/allow_remote_control
 --      in kitty.conf) -- add a new tab there via kitty's remote control
 --      socket instead of spawning a whole new kitty process.
@@ -39,34 +42,35 @@ hotkey.bind({ "cmd", "ctrl" }, "z", function() application.launchOrFocus(termina
 -- focuses the new window itself -- calling launchOrFocus there would race
 -- with the new window's creation and could steal focus back to a different,
 -- pre-existing kitty window instead.
--- The script is run through `zsh -l` (not directly) so it sources
+-- The command is run through `zsh -l` (not directly) so it sources
 -- ~/.zprofile and picks up the homebrew PATH -- apps launched via `open` or
 -- kitty's remote control inherit launchd's bare PATH, which doesn't include
--- /opt/homebrew/bin, so fzf would be missing and the script/window would
+-- /opt/homebrew/bin, so fzf would be missing and the command/window would
 -- close immediately.
-local function runAbletonFiddleProject()
-  local abletonScript = os.getenv("HOME") .. "/git/scripts/ableton/open_ableton_fiddle_project.sh"
+local function runInTerminal(command)
   local tmpdir = (os.getenv("TMPDIR") or "/tmp"):gsub("/*$", "")
   local nvimSockGlob = tmpdir .. "/nvim." .. user .. "/*/nvim.*.0"
   local kittySockGlob = tmpdir .. "/kitty-*"
+  local nvimRemoteCmd = [[<C-\><C-n>:lua require("scripts").init_split_term("]] .. command .. [[")<CR>]]
   local shellCmd = [[
     mode=new
     for sock in $(ls -t ]] .. nvimSockGlob .. [[ 2>/dev/null); do
-      if /opt/homebrew/bin/nvim --headless --server "$sock" --remote-send '<C-\><C-n> ab' 2>/dev/null; then
+      if /opt/homebrew/bin/nvim --headless --server "$sock" --remote-send ']] .. nvimRemoteCmd .. [[' 2>/dev/null; then
         mode=reuse
         break
       fi
     done
     if [ "$mode" = "new" ]; then
       for sock in $(ls -t ]] .. kittySockGlob .. [[ 2>/dev/null); do
-        if /Applications/kitty.app/Contents/MacOS/kitty @ --to "unix:$sock" launch --type=tab --cwd=current /bin/zsh -l -c "]] .. abletonScript .. [[" 2>/dev/null; then
+        if /Applications/kitty.app/Contents/MacOS/kitty @ --to "unix:$sock" launch --type=tab --cwd=current /bin/zsh -l -c "]] ..
+      command .. [[" 2>/dev/null; then
           mode=reuse
           break
         fi
       done
     fi
     if [ "$mode" = "new" ]; then
-      open -na kitty --args -e /bin/zsh -l -c "]] .. abletonScript .. [["
+      open -na kitty --args -e /bin/zsh -l -c "]] .. command .. [["
     fi
     echo "$mode"
   ]]
@@ -76,11 +80,20 @@ local function runAbletonFiddleProject()
   end
 end
 
+local function runAbletonFiddleProject()
+  runInTerminal(os.getenv("HOME") .. "/git/scripts/ableton/open_ableton_fiddle_project.sh")
+end
+
 hotkey.bind({ "cmd", "ctrl" }, "s", runAbletonFiddleProject)
+
+local function runOpenDropboxFile()
+  runInTerminal(os.getenv("HOME") .. "/gocode/bin/musicstudio --open-dropbox-file")
+end
+
+hotkey.bind({ "cmd", "ctrl" }, "d", runOpenDropboxFile)
 
 hotkey.bind({ "cmd", "ctrl" }, "k", function() application.launchOrFocus("Amazon Kindle") end)
 hotkey.bind({ "cmd", "ctrl" }, "a", function() application.launchOrFocus("Ableton Live 12 Standard") end)
--- hotkey.bind({ "cmd", "ctrl" }, "a", function() hs.execute("~/git/dotfiles/scripts/browser/openCalendar.sh") end)
 hotkey.bind({ "cmd", "ctrl" }, "m", function() hs.execute(scriptsDir .. "/browser/openEmail.sh") end)
 hotkey.bind({ "cmd", "ctrl" }, "j", function() hs.execute(scriptsDir .. "/browser/openJira.sh") end)
 -- hotkey.bind({ "cmd", "ctrl" }, "p", function() hs.execute(home .. "/gocode/bin/webwalker --flow fidelity", true) end)
